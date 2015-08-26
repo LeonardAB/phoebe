@@ -27,6 +27,11 @@ public class Config {
 	 */
 	private static final String KANJIDB_LOCATION = "kanji.db";
 
+	/**
+	 * Default location of the KRADX file.
+	 */
+	private static final String KRADX_LOCATION = "kradx.xml";
+
 	private Properties properties = new Properties();
 
 	/**
@@ -77,5 +82,14 @@ public class Config {
 	 */
 	public String getKanjiDbLocation() {
 		return properties.getProperty("kanji.db.location", KANJIDB_LOCATION);
+	}
+
+	/**
+	 * Get the location of the KRADX file, defaulting to {@value #KRADX_LOCATION} if absent.
+	 *
+	 * @return Where to find the KRADX file.
+	 */
+	public String getRadicalDicLocation() {
+		return properties.getProperty("radicals.dict.location", KRADX_LOCATION);
 	}
 }

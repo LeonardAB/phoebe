@@ -82,11 +82,6 @@ public class Kanji {
 	 */
 	private List<String> meanings;
 
-//	/**
-//	 * The list of components or radicals that make up the kanji.
-//	 */
-	//private List<String> components;
-
 	public String getLiteral() {
 		return literal;
 	}
@@ -197,18 +192,5 @@ public class Kanji {
 
 	public void setMeanings(List<String> meanings) {
 		this.meanings = meanings;
-	}
-
-//	public List<String> getComponents() {
-//		return components;
-//	}
-//
-//	public void setComponents(List<String> components) {
-//		this.components = components;
-//	}
-
-	@Override
-	public String toString() {
-		return literal;
 	}
 }

@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.List;
 
 import net.fauxpark.phoebe.model.Kanji;
+import net.fauxpark.phoebe.model.Radical;
 import net.fauxpark.phoebe.openhelper.KanjiDbOpenHelper;
 
 /**
@@ -34,7 +35,8 @@ public class KanjiDataSource extends BaseDataSource {
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT UNIQUE NOT NULL, " +
 			"codepoint TEXT NOT NULL, radical INTEGER NOT NULL, grade INTEGER, " +
 			"stroke_count INTEGER NOT NULL, frequency INTEGER, jlpt INTEGER, heisig INTEGER, " +
-			"skip TEXT, four_corner TEXT, onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT)";
+			"skip TEXT, four_corner TEXT, onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT, " +
+			"components TEXT)";
 
 		try {
 			Statement statement = connection.createStatement();
@@ -114,6 +116,35 @@ public class KanjiDataSource extends BaseDataSource {
 	public void addKanji(List<Kanji> kanjis) {
 		for(Kanji kanji : kanjis) {
 			addKanji(kanji);
+		}
+	}
+
+	/**
+	 * Add kanji radicals to an existing kanji record.
+	 *
+	 * @param radical The string of radicals to add.
+	 */
+	public void addRadical(Radical radical) {
+		String query = "UPDATE kanji SET components = ? WHERE literal = ?";
+
+		try {
+			PreparedStatement pStatement = connection.prepareStatement(query);
+			pStatement.setString(1, radical.getComponents());
+			pStatement.setString(2, radical.getLiteral());
+			pStatement.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Merge kanji radicals from a list of {@link Radical} into the kanji database.
+	 *
+	 * @param radicals The list of radicals to insert into the database.
+	 */
+	public void addRadicals(List<Radical> radicals) {
+		for(Radical radical : radicals) {
+			addRadical(radical);
 		}
 	}
 
