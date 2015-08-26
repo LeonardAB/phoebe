@@ -99,6 +99,7 @@ public class KanjiDataSource extends BaseDataSource {
 			pStatement.setString(14, kanji.getMeanings().toString());
 
 			pStatement.executeUpdate();
+			pStatement.close();
 		} catch(SQLException e) {
 			if(e.getErrorCode() == 19) {
 				System.out.println("Kanji " + kanji.getLiteral() + " already exists in DB, skipping");
@@ -132,6 +133,7 @@ public class KanjiDataSource extends BaseDataSource {
 			pStatement.setString(1, radical.getComponents());
 			pStatement.setString(2, radical.getLiteral());
 			pStatement.executeUpdate();
+			pStatement.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
