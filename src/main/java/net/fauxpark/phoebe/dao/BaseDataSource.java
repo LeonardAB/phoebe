@@ -11,14 +11,27 @@ import net.fauxpark.phoebe.openhelper.BaseDbOpenHelper;
  */
 public abstract class BaseDataSource {
 	/**
-	 * The database connection.
-	 */
-	protected Connection connection;
-
-	/**
 	 * The database open helper.
 	 */
-	protected BaseDbOpenHelper dbOpenHelper;
+	private BaseDbOpenHelper dbOpenHelper;
+
+	/**
+	 * BaseDataSource constructor.
+	 *
+	 * @param dbOpenHelper A database open helper.
+	 */
+	public BaseDataSource(BaseDbOpenHelper dbOpenHelper) {
+		this.dbOpenHelper = dbOpenHelper;
+	}
+
+	/**
+	 * Get the database open helper's Connection.
+	 *
+	 * @return
+	 */
+	public Connection getConnection() {
+		return dbOpenHelper.getConnection();
+	}
 
 	/**
 	 * Close the database open helper.

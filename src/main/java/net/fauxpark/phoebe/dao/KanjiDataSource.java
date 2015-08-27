@@ -23,8 +23,7 @@ public class KanjiDataSource extends BaseDataSource {
 	 * @param fileName The file name of the database to pass to the open helper.
 	 */
 	public KanjiDataSource(String fileName) {
-		dbOpenHelper = KanjiDbOpenHelper.getOpenHelper(fileName);
-		connection = dbOpenHelper.getConnection();
+		super(KanjiDbOpenHelper.getOpenHelper(fileName));
 	}
 
 	/**
@@ -39,7 +38,7 @@ public class KanjiDataSource extends BaseDataSource {
 			"components TEXT)";
 
 		try {
-			Statement statement = connection.createStatement();
+			Statement statement = getConnection().createStatement();
 			statement.executeUpdate(schema);
 			statement.close();
 		} catch(SQLException e) {
@@ -59,8 +58,8 @@ public class KanjiDataSource extends BaseDataSource {
 			") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
-			connection.setAutoCommit(false);
-			PreparedStatement pStatement = connection.prepareStatement(insert);
+			getConnection().setAutoCommit(false);
+			PreparedStatement pStatement = getConnection().prepareStatement(insert);
 
 			for(Kanji kanji : kanjis) {
 				pStatement.setString(1, kanji.getLiteral());
@@ -103,9 +102,9 @@ public class KanjiDataSource extends BaseDataSource {
 			}
 
 			pStatement.executeBatch();
-			connection.commit();
+			getConnection().commit();
 			pStatement.close();
-			connection.setAutoCommit(true);
+			getConnection().setAutoCommit(true);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,8 +119,8 @@ public class KanjiDataSource extends BaseDataSource {
 		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
 
 		try {
-			PreparedStatement pStatement = connection.prepareStatement(update);
-			connection.setAutoCommit(false);
+			PreparedStatement pStatement = getConnection().prepareStatement(update);
+			getConnection().setAutoCommit(false);
 
 			for(Radical radical : radicals) {
 				pStatement.setString(1, radical.getComponents());
@@ -130,9 +129,9 @@ public class KanjiDataSource extends BaseDataSource {
 			}
 
 			pStatement.executeBatch();
-			connection.commit();
+			getConnection().commit();
 			pStatement.close();
-			connection.setAutoCommit(true);
+			getConnection().setAutoCommit(true);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +144,7 @@ public class KanjiDataSource extends BaseDataSource {
 	 */
 	public String getFirstKanji() {
 		try {
-			Statement statement = connection.createStatement();
+			Statement statement = getConnection().createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT literal FROM kanji WHERE id = 1 LIMIT 1");
 			statement.close();
 

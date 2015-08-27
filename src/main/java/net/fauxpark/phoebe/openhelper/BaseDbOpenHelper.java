@@ -13,7 +13,7 @@ public abstract class BaseDbOpenHelper {
 	/**
 	 * The database connection.
 	 */
-	protected Connection connection = null;
+	private Connection connection = null;
 
 	/**
 	 * BaseDbOpenHelper constructor.
