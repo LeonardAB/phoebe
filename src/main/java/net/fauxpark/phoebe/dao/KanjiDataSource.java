@@ -143,16 +143,24 @@ public class KanjiDataSource extends BaseDataSource {
 	 * @return 亜
 	 */
 	public String getFirstKanji() {
+		String query = "SELECT literal FROM kanji WHERE id = 1 LIMIT 1";
+		String result = null;
+
 		try {
 			Statement statement = getConnection().createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT literal FROM kanji WHERE id = 1 LIMIT 1");
-			statement.close();
+			ResultSet resultSet = statement.executeQuery(query);
 
-			return resultSet.getString(0);
+			if(resultSet.next()) {
+				result = resultSet.getString(1);
+				resultSet.close();
+				statement.close();
+
+				return result;
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
-
-			return null;
 		}
+
+		return null;
 	}
 }
