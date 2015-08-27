@@ -48,92 +48,64 @@ public class KanjiDataSource extends BaseDataSource {
 	}
 
 	/**
-	 * Add a single kanji to the database.
+	 * Add kanji records from a list of {@link Kanji}.
 	 *
-	 * @param kanji The kanji to add.
+	 * @param kanjis The list of kanji to insert into the database.
 	 */
-	public void addKanji(Kanji kanji) {
+	public void addKanji(List<Kanji> kanjis) {
 		String insert = "INSERT INTO kanji (" +
 			"literal, codepoint, radical, grade, stroke_count, frequency, jlpt, " +
 			"heisig, skip, four_corner, onyomi, kunyomi, nanori, meanings" +
 			") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
+			connection.setAutoCommit(false);
 			PreparedStatement pStatement = connection.prepareStatement(insert);
 
-			pStatement.setString(1, kanji.getLiteral());
-			pStatement.setString(2, kanji.getCodepoint());
-			pStatement.setInt(3, kanji.getRadical());
+			for(Kanji kanji : kanjis) {
+				pStatement.setString(1, kanji.getLiteral());
+				pStatement.setString(2, kanji.getCodepoint());
+				pStatement.setInt(3, kanji.getRadical());
 
-			if(kanji.getGrade() != null) {
-				pStatement.setInt(4, kanji.getGrade());
-			} else {
-				pStatement.setNull(4, Types.INTEGER);
+				if(kanji.getGrade() != null) {
+					pStatement.setInt(4, kanji.getGrade());
+				} else {
+					pStatement.setNull(4, Types.INTEGER);
+				}
+
+				pStatement.setInt(5, kanji.getStrokeCount());
+
+				if(kanji.getFrequency() != null) {
+					pStatement.setInt(6, kanji.getFrequency());
+				} else {
+					pStatement.setNull(6, Types.INTEGER);
+				}
+
+				if(kanji.getJlpt() != null) {
+					pStatement.setInt(7, kanji.getJlpt());
+				} else {
+					pStatement.setNull(7, Types.INTEGER);
+				}
+
+				if(kanji.getHeisig() != null) {
+					pStatement.setInt(8, kanji.getHeisig());
+				} else {
+					pStatement.setNull(8, Types.INTEGER);
+				}
+
+				pStatement.setString(9, kanji.getSkip());
+				pStatement.setString(10, kanji.getFourCorner());
+				pStatement.setString(11, kanji.getOnyomi().toString());
+				pStatement.setString(12, kanji.getKunyomi().toString());
+				pStatement.setString(13, kanji.getNanori().toString());
+				pStatement.setString(14, kanji.getMeanings().toString());
+				pStatement.addBatch();
 			}
 
-			pStatement.setInt(5, kanji.getStrokeCount());
-
-			if(kanji.getFrequency() != null) {
-				pStatement.setInt(6, kanji.getFrequency());
-			} else {
-				pStatement.setNull(6, Types.INTEGER);
-			}
-
-			if(kanji.getJlpt() != null) {
-				pStatement.setInt(7, kanji.getJlpt());
-			} else {
-				pStatement.setNull(7, Types.INTEGER);
-			}
-
-			if(kanji.getHeisig() != null) {
-				pStatement.setInt(8, kanji.getHeisig());
-			} else {
-				pStatement.setNull(8, Types.INTEGER);
-			}
-
-			pStatement.setString(9, kanji.getSkip());
-			pStatement.setString(10, kanji.getFourCorner());
-			pStatement.setString(11, kanji.getOnyomi().toString());
-			pStatement.setString(12, kanji.getKunyomi().toString());
-			pStatement.setString(13, kanji.getNanori().toString());
-			pStatement.setString(14, kanji.getMeanings().toString());
-
-			pStatement.executeUpdate();
+			pStatement.executeBatch();
+			connection.commit();
 			pStatement.close();
-		} catch(SQLException e) {
-			if(e.getErrorCode() == 19) {
-				System.out.println("Kanji " + kanji.getLiteral() + " already exists in DB, skipping");
-			} else {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Add kanji records from a list of {@link Kanji}.
-	 *
-	 * @param kanjis The list of kanji to insert into the database.
-	 */
-	public void addKanji(List<Kanji> kanjis) {
-		for(Kanji kanji : kanjis) {
-			addKanji(kanji);
-		}
-	}
-
-	/**
-	 * Add kanji radicals to an existing kanji record.
-	 *
-	 * @param radical The string of radicals to add.
-	 */
-	public void addRadical(Radical radical) {
-		String query = "UPDATE kanji SET components = ? WHERE literal = ?";
-
-		try {
-			PreparedStatement pStatement = connection.prepareStatement(query);
-			pStatement.setString(1, radical.getComponents());
-			pStatement.setString(2, radical.getLiteral());
-			pStatement.executeUpdate();
-			pStatement.close();
+			connection.setAutoCommit(true);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,8 +117,24 @@ public class KanjiDataSource extends BaseDataSource {
 	 * @param radicals The list of radicals to insert into the database.
 	 */
 	public void addRadicals(List<Radical> radicals) {
-		for(Radical radical : radicals) {
-			addRadical(radical);
+		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
+
+		try {
+			PreparedStatement pStatement = connection.prepareStatement(update);
+			connection.setAutoCommit(false);
+
+			for(Radical radical : radicals) {
+				pStatement.setString(1, radical.getComponents());
+				pStatement.setString(2, radical.getLiteral());
+				pStatement.addBatch();
+			}
+
+			pStatement.executeBatch();
+			connection.commit();
+			pStatement.close();
+			connection.setAutoCommit(true);
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
