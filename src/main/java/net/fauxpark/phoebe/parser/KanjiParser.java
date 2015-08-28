@@ -50,7 +50,7 @@ public class KanjiParser extends BaseParser<Kanji> {
 	public List<Kanji> parse(Integer limit) {
 		List<Kanji> kanjis = new ArrayList<>();
 
-		if(limit == null) {
+		if(limit == null || limit > characters.getLength()) {
 			limit = characters.getLength();
 		}
 

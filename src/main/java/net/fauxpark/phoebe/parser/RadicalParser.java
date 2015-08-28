@@ -49,7 +49,7 @@ public class RadicalParser extends BaseParser<Radical> {
 	public List<Radical> parse(Integer limit) {
 		List<Radical> radicals = new ArrayList<>();
 
-		if(limit == null) {
+		if(limit == null || limit > characters.getLength()) {
 			limit = characters.getLength();
 		}
 
