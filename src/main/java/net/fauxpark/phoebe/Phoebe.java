@@ -27,7 +27,7 @@ public class Phoebe {
 		System.out.println("Adding radicals...");
 		kanjiDao.addRadicals(radicalParser.parse(config.getKanjiParseLimit()));
 		long end = System.currentTimeMillis();
-		System.out.println("Done, took " + ((end - start) / 1000) + " seconds.");
+		System.out.println("Done, took " + ((end - start) / 1000.0) + " seconds.");
 
 		kanjiDao.close();
 	}
