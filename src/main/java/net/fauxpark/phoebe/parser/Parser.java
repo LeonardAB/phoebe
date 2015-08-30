@@ -18,7 +18,7 @@ import org.w3c.dom.NodeList;
  *
  * @param <T> The type of model object the class will work with.
  */
-public abstract class BaseParser<T> {
+public abstract class Parser<T> {
 	/**
 	 * The {@link Document} to be parsed.
 	 */
@@ -30,11 +30,11 @@ public abstract class BaseParser<T> {
 	protected Element character;
 
 	/**
-	 * BaseParser constructor.
+	 * Parser constructor.
 	 *
 	 * @param fileName the input .xml document to parse into a {@link Document}.
 	 */
-	public BaseParser(String fileName) {
+	public Parser(String fileName) {
 		try {
 			DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dFactory.newDocumentBuilder();

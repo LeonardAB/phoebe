@@ -1,26 +1,26 @@
-package net.fauxpark.phoebe.openhelper;
+package net.fauxpark.phoebe.helper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * A base database open helper.
+ * A base database helper.
  *
  * @author fauxpark
  */
-public abstract class BaseDbOpenHelper {
+public abstract class DatabaseHelper {
 	/**
 	 * The database connection.
 	 */
 	private Connection connection = null;
 
 	/**
-	 * BaseDbOpenHelper constructor.
+	 * DatabaseHelper constructor.
 	 *
 	 * @param fileName The file name of the database to open (or create if it is nonexistent).
 	 */
-	public BaseDbOpenHelper(String fileName) {
+	public DatabaseHelper(String fileName) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + fileName);

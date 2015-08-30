@@ -1,4 +1,4 @@
-package net.fauxpark.phoebe.dao;
+package net.fauxpark.phoebe.provider;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,23 +7,23 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 
+import net.fauxpark.phoebe.helper.KanjiDatabaseHelper;
 import net.fauxpark.phoebe.model.Kanji;
-import net.fauxpark.phoebe.model.Radical;
-import net.fauxpark.phoebe.openhelper.KanjiDbOpenHelper;
+import net.fauxpark.phoebe.model.Components;
 
 /**
- * A kanji oriented data source.
+ * A kanji oriented provider.
  *
  * @author fauxpark
  */
-public class KanjiDataSource extends BaseDataSource {
+public class KanjiProvider extends DatabaseProvider {
 	/**
-	 * Create a new kanji data source.
+	 * KanjiProvider constructor.
 	 *
 	 * @param fileName The file name of the database to pass to the open helper.
 	 */
-	public KanjiDataSource(String fileName) {
-		super(KanjiDbOpenHelper.getOpenHelper(fileName));
+	public KanjiProvider(String fileName) {
+		super(KanjiDatabaseHelper.getInstance(fileName));
 	}
 
 	/**
@@ -111,18 +111,18 @@ public class KanjiDataSource extends BaseDataSource {
 	}
 
 	/**
-	 * Merge kanji radicals from a list of {@link Radical} into the kanji database.
+	 * Merge kanji radicals from a list of {@link Components} into the kanji database.
 	 *
 	 * @param radicals The list of radicals to insert into the database.
 	 */
-	public void addRadicals(List<Radical> radicals) {
+	public void addRadicals(List<Components> radicals) {
 		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
 
 		try {
 			PreparedStatement pStatement = getConnection().prepareStatement(update);
 			getConnection().setAutoCommit(false);
 
-			for(Radical radical : radicals) {
+			for(Components radical : radicals) {
 				pStatement.setString(1, radical.getComponents());
 				pStatement.setString(2, radical.getLiteral());
 				pStatement.addBatch();

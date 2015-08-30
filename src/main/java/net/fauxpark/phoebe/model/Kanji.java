@@ -24,11 +24,7 @@ public class Kanji {
 	private Integer radical;
 
 	/**
-	 * The grade of the kanji.
-	 *
-	 * Grades 1 through 6 are Kyōiku kanji taught in elementary school.
-	 * Grade 8 kanji are taught in junior high.
-	 * Grades 9 and 10 are Jinmeiyō kanji, used in personal names.
+	 * The grade of the kanji, from 1 to 10.
 	 */
 	private Integer grade;
 
@@ -63,17 +59,17 @@ public class Kanji {
 	private String fourCorner;
 
 	/**
-	 * The list of on'yomi (Chinese-derived) readings of the kanji.
+	 * The list of <i>on'yomi</i> (Chinese-derived) readings of the kanji.
 	 */
 	private List<String> onyomi;
 
 	/**
-	 * The list of kun'yomi (Japanese-derived) readings of the kanji.
+	 * The list of <i>kun'yomi</i> (Japanese-derived) readings of the kanji.
 	 */
 	private List<String> kunyomi;
 
 	/**
-	 * The list of nanori (name-only) readings of the kanji.
+	 * The list of <i>nanori</i> (name-only) readings of the kanji.
 	 */
 	private List<String> nanori;
 

@@ -1,8 +1,8 @@
 package net.fauxpark.phoebe;
 
-import net.fauxpark.phoebe.dao.KanjiDataSource;
 import net.fauxpark.phoebe.parser.KanjiParser;
-import net.fauxpark.phoebe.parser.RadicalParser;
+import net.fauxpark.phoebe.parser.ComponentsParser;
+import net.fauxpark.phoebe.provider.KanjiProvider;
 
 public class Phoebe {
 	public static void main(String[] args) {
@@ -14,19 +14,19 @@ public class Phoebe {
 		}
 
 		KanjiParser kanjiParser = new KanjiParser(Config.getKanjiDicLocation());
-		KanjiDataSource kanjiDao = new KanjiDataSource(Config.getKanjiDbLocation());
-		kanjiDao.createTable();
+		KanjiProvider kanjiProvider = new KanjiProvider(Config.getKanjiDbLocation());
+		kanjiProvider.createTable();
 
-		RadicalParser radicalParser = new RadicalParser(Config.getRadicalDicLocation());
+		ComponentsParser radicalParser = new ComponentsParser(Config.getRadicalDicLocation());
 
 		long start = System.currentTimeMillis();
 		System.out.println("Adding kanji...");
-		kanjiDao.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
+		kanjiProvider.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
 		System.out.println("Adding radicals...");
-		kanjiDao.addRadicals(radicalParser.parse(Config.getKanjiParseLimit()));
+		kanjiProvider.addRadicals(radicalParser.parse(Config.getKanjiParseLimit()));
 		long end = System.currentTimeMillis();
 		System.out.println("Done, took " + ((end - start) / 1000.0) + " seconds.");
 
-		kanjiDao.close();
+		kanjiProvider.close();
 	}
 }

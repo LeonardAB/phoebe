@@ -5,7 +5,7 @@ package net.fauxpark.phoebe.model;
  *
  * @author fauxpark
  */
-public class Radical {
+public class Components {
 	/**
 	 * The kanji literal in UTF-8 encoding.
 	 */

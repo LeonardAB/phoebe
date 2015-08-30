@@ -6,26 +6,26 @@ import java.util.List;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import net.fauxpark.phoebe.model.Radical;
+import net.fauxpark.phoebe.model.Components;
 
 /**
- * A radical oriented parser.
+ * A kanji component oriented parser.
  *
  * @author fauxpark
  */
-public class RadicalParser extends BaseParser<Radical> {
+public class ComponentsParser extends Parser<Components> {
 	/**
-	 * A list of {@link Node}s that the parser will iterate through in {@link RadicalParser#parse()}.
+	 * A list of {@link Node}s that the parser will iterate through in {@link ComponentsParser#parse()}.
 	 */
 	private NodeList characters;
 
 	/**
-	 * Creates a new {@link RadicalParser}.
+	 * Creates a new {@link ComponentsParser}.
 	 *
 	 * @param fileName The location of the kradx.xml file.
 	 * @throws UnsupportedOperationException if the root element is not &lt;kradx&gt;.
 	 */
-	public RadicalParser(String fileName) throws UnsupportedOperationException {
+	public ComponentsParser(String fileName) throws UnsupportedOperationException {
 		super(fileName);
 
 		if(!document.getDocumentElement().getTagName().equals("kradx")) {
@@ -41,13 +41,13 @@ public class RadicalParser extends BaseParser<Radical> {
 	}
 
 	/**
-	 * Where the magic happens. Parses the radical dictionary.
+	 * Where the magic happens. Parses the components dictionary.
 	 *
-	 * @param limit The number of radicals to parse. Null parses everything.
-	 * @return A list of {@link Radical} objects.
+	 * @param limit The number of components to parse. Null parses everything.
+	 * @return A list of {@link Components} objects.
 	 */
-	public List<Radical> parse(Integer limit) {
-		List<Radical> radicals = new ArrayList<>();
+	public List<Components> parse(Integer limit) {
+		List<Components> components = new ArrayList<>();
 
 		if(limit == null || limit > characters.getLength()) {
 			limit = characters.getLength();
@@ -57,13 +57,13 @@ public class RadicalParser extends BaseParser<Radical> {
 
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));
-			Radical radical = new Radical();
-			radical.setLiteral(getLiteral());
-			radical.setComponents(getComponents());
-			radicals.add(radical);
+			Components component = new Components();
+			component.setLiteral(getLiteral());
+			component.setComponents(getComponents());
+			components.add(component);
 		}
 
-		return radicals;
+		return components;
 	}
 
 	/**

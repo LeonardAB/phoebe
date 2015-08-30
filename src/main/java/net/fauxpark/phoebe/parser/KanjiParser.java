@@ -14,7 +14,7 @@ import net.fauxpark.phoebe.model.Kanji;
  *
  * @author fauxpark
  */
-public class KanjiParser extends BaseParser<Kanji> {
+public class KanjiParser extends Parser<Kanji> {
 	/**
 	 * A list of {@link Node}s that the parser will iterate through in {@link KanjiParser#parse()}.
 	 */
