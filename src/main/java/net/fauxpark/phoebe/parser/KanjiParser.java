@@ -194,9 +194,9 @@ public class KanjiParser extends Parser<Kanji> {
 	}
 
 	/**
-	 * Get the current kanji's on'yomi (Chinese-derived) readings.
+	 * Get the current kanji's <i>on'yomi</i> (Chinese-derived) readings.
 	 *
-	 * @return A list of on'yomi readings in katakana.
+	 * @return A list of readings in katakana.
 	 */
 	private List<String> getOnyomi() {
 		NodeList nl = character.getElementsByTagName("reading");
@@ -215,9 +215,9 @@ public class KanjiParser extends Parser<Kanji> {
 	}
 
 	/**
-	 * Get the current kanji's kun'yomi (Japanese-derived) readings.
+	 * Get the current kanji's <i>kun'yomi</i> (Japanese-derived) readings.
 	 *
-	 * @return A list of kun'yomi readings in hiragana.
+	 * @return A list of readings in hiragana.
 	 */
 	private List<String> getKunyomi() {
 		NodeList nl = character.getElementsByTagName("reading");
@@ -236,9 +236,9 @@ public class KanjiParser extends Parser<Kanji> {
 	}
 
 	/**
-	 * Get the current kanji's nanori (name-only) readings.
+	 * Get the current kanji's <i>nanori</i> (name-only) readings.
 	 *
-	 * @return A list of nanori readings in hiragana.
+	 * @return A list of readings in hiragana.
 	 */
 	private List<String> getNanori() {
 		NodeList nl = character.getElementsByTagName("nanori");

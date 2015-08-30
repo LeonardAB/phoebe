@@ -94,10 +94,31 @@ public class KanjiProvider extends DatabaseProvider {
 
 				pStatement.setString(9, kanji.getSkip());
 				pStatement.setString(10, kanji.getFourCorner());
-				pStatement.setString(11, kanji.getOnyomi().toString());
-				pStatement.setString(12, kanji.getKunyomi().toString());
-				pStatement.setString(13, kanji.getNanori().toString());
-				pStatement.setString(14, kanji.getMeanings().toString());
+
+				if(kanji.getOnyomi().size() > 0) {
+					pStatement.setString(11, listToString(kanji.getOnyomi()));
+				} else {
+					pStatement.setNull(11, Types.VARCHAR);
+				}
+
+				if(kanji.getKunyomi().size() > 0) {
+					pStatement.setString(12, listToString(kanji.getKunyomi()));
+				} else {
+					pStatement.setNull(12, Types.VARCHAR);
+				}
+
+				if(kanji.getNanori().size() > 0) {
+					pStatement.setString(13, listToString(kanji.getNanori()));
+				} else {
+					pStatement.setNull(13, Types.VARCHAR);
+				}
+
+				if(kanji.getMeanings().size() > 0) {
+					pStatement.setString(14, listToString(kanji.getMeanings()));
+				} else {
+					pStatement.setNull(14, Types.VARCHAR);
+				}
+
 				pStatement.addBatch();
 			}
 
@@ -162,5 +183,21 @@ public class KanjiProvider extends DatabaseProvider {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Format the contents of a List<String> into a usable string.
+	 *
+	 * @param list The list to convert.
+	 * @return A string containing the elements of the list, enclosed in square brackets.
+	 */
+	private String listToString(List<String> list) {
+		String retVal = "";
+
+		for(String item : list) {
+			retVal += "[" + item + "]";
+		}
+
+		return retVal;
 	}
 }
