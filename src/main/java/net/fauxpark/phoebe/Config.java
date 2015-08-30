@@ -32,14 +32,14 @@ public class Config {
 	 */
 	private static final String KRADX_LOCATION = "kradx.xml";
 
-	private Properties properties = new Properties();
+	private static Properties properties = new Properties();
 
 	/**
 	 * Load configuration.
 	 *
 	 * @throws IOException if an error occurred when loading the properties file.
 	 */
-	public Config() throws IOException {
+	public static void load() throws IOException {
 		File file = new File(PROPERTIES_LOCATION);
 
 		try {
@@ -58,7 +58,7 @@ public class Config {
 	 *
 	 * @return The number of kanji to parse.
 	 */
-	public Integer getKanjiParseLimit() {
+	public static Integer getKanjiParseLimit() {
 		try{
 			return Integer.parseInt(properties.getProperty("kanji.parselimit"));
 		} catch(NumberFormatException e) {
@@ -71,7 +71,7 @@ public class Config {
 	 *
 	 * @return Where to find the KANJIDIC2 file.
 	 */
-	public String getKanjidicLocation() {
+	public static String getKanjiDicLocation() {
 		return properties.getProperty("kanji.dict.location", KANJIDIC_LOCATION);
 	}
 
@@ -80,7 +80,7 @@ public class Config {
 	 *
 	 * @return Where to place the resulting kanji database.
 	 */
-	public String getKanjiDbLocation() {
+	public static String getKanjiDbLocation() {
 		return properties.getProperty("kanji.db.location", KANJIDB_LOCATION);
 	}
 
@@ -89,7 +89,7 @@ public class Config {
 	 *
 	 * @return Where to find the KRADX file.
 	 */
-	public String getRadicalDicLocation() {
+	public static String getRadicalDicLocation() {
 		return properties.getProperty("radicals.dict.location", KRADX_LOCATION);
 	}
 }
