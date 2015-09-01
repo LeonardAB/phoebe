@@ -46,6 +46,7 @@ public class ComponentsParser extends Parser<Components> {
 	 * @param limit The number of components to parse. Null parses everything.
 	 * @return A list of {@link Components} objects.
 	 */
+	@Override
 	public List<Components> parse(Integer limit) {
 		List<Components> components = new ArrayList<>();
 

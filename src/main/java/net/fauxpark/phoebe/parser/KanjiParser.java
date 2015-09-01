@@ -47,6 +47,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 * @param limit The number of kanji to parse. Null parses everything.
 	 * @return A list of {@link Kanji} objects.
 	 */
+	@Override
 	public List<Kanji> parse(Integer limit) {
 		List<Kanji> kanjis = new ArrayList<>();
 
