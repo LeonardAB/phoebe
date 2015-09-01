@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.fauxpark.phoebe.helper.KanjiDatabaseHelper;
 import net.fauxpark.phoebe.model.Kanji;
+import net.fauxpark.phoebe.model.Radical;
 import net.fauxpark.phoebe.model.Components;
 
 /**
@@ -33,19 +34,23 @@ public class KanjiProvider extends DatabaseProvider {
 	/**
 	 * Perform the initial table creation.
 	 */
-	public void createTable() {
-		String schema = "CREATE TABLE IF NOT EXISTS kanji (" +
+	public void createTables() {
+		String schemaKanji = "CREATE TABLE IF NOT EXISTS kanji (" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT UNIQUE NOT NULL, " +
 			"codepoint TEXT NOT NULL, radical INTEGER NOT NULL, grade INTEGER, " +
 			"stroke_count INTEGER NOT NULL, frequency INTEGER, jlpt INTEGER, heisig INTEGER, " +
 			"skip TEXT, four_corner TEXT, onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT, " +
 			"components TEXT)";
+		String schemaRadicals = "CREATE TABLE IF NOT EXISTS radicals (" +
+			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT NOT NULL, " +
+			"name TEXT NOT NULL, stroke_count INTEGER NOT NULL, variants TEXT)";
 
 		try {
-			log.info("Creating kanji table");
+			log.info("Creating kanji database tables");
 
 			Statement statement = getConnection().createStatement();
-			statement.executeUpdate(schema);
+			statement.executeUpdate(schemaKanji);
+			statement.executeUpdate(schemaRadicals);
 			statement.close();
 		} catch(SQLException e) {
 			log.error("SQL Exception occurred.", e);
@@ -160,6 +165,45 @@ public class KanjiProvider extends DatabaseProvider {
 
 				pStatement.setString(1, component.getComponents());
 				pStatement.setString(2, component.getLiteral());
+				pStatement.addBatch();
+			}
+
+			pStatement.executeBatch();
+			getConnection().commit();
+			pStatement.close();
+			getConnection().setAutoCommit(true);
+		} catch(SQLException e) {
+			log.error("SQL Exception occurred.", e);
+		}
+	}
+
+	/**
+	 * Add kanji radicals from a list of {@link Radical}s.
+	 *
+	 * @param radicals The list of radicals to insert into the database.
+	 */
+	public void addRadicals(List<Radical> radicals) {
+		String update = "INSERT INTO radicals (literal, name, stroke_count, variants) VALUES (?, ?, ?, ?)";
+
+		try {
+			log.info("Inserting kanji radicals");
+
+			PreparedStatement pStatement = getConnection().prepareStatement(update);
+			getConnection().setAutoCommit(false);
+
+			for(Radical radical : radicals) {
+				log.debug("Inserting radical: " + radical.getLiteral());
+
+				pStatement.setString(1, radical.getLiteral());
+				pStatement.setString(2, radical.getName());
+				pStatement.setInt(3, radical.getStrokeCount());
+
+				if(radical.getVariants() != null) {
+					pStatement.setString(4, radical.getVariants());
+				} else {
+					pStatement.setNull(4, Types.VARCHAR);
+				}
+
 				pStatement.addBatch();
 			}
 

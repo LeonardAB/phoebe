@@ -35,6 +35,11 @@ public class Config {
 	 */
 	private static final String KRADX_LOCATION = "kradx.xml";
 
+	/**
+	 * Default location of the RADICALS file.
+	 */
+	private static final String RADICALS_LOCATION = "radicals.xml";
+
 	private static Properties properties = new Properties();
 
 	private static final Logger log = LogManager.getLogger(Config.class);
@@ -96,5 +101,14 @@ public class Config {
 	 */
 	public static String getComponentsDicLocation() {
 		return properties.getProperty("components.dict.location", KRADX_LOCATION);
+	}
+
+	/**
+	 * Get the location of the RADICALS file, defaulting to {@value #RADICALS_LOCATION} if absent.
+	 *
+	 * @return Where to find the RADICALS file.
+	 */
+	public static String getRadicalsDicLocation() {
+		return properties.getProperty("radicals.dict.location", RADICALS_LOCATION);
 	}
 }

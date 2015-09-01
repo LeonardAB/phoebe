@@ -24,7 +24,7 @@ public class ComponentsParser extends Parser<Components> {
 	private static final Logger log = LogManager.getLogger(ComponentsParser.class);
 
 	/**
-	 * Creates a new {@link ComponentsParser}.
+	 * ComponentsParser constructor.
 	 *
 	 * @param fileName The location of the kradx.xml file.
 	 */

@@ -25,7 +25,7 @@ public class KanjiParser extends Parser<Kanji> {
 	private static final Logger log = LogManager.getLogger(KanjiParser.class);
 
 	/**
-	 * Creates a new {@link KanjiParser}.
+	 * KanjiParser constructor.
 	 *
 	 * @param fileName The location of the kanjidic2.xml file.
 	 */
