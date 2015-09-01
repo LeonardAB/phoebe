@@ -19,20 +19,27 @@ public class Phoebe {
 			System.exit(1);
 		}
 
+		// Setup parsers
 		KanjiParser kanjiParser = new KanjiParser(Config.getKanjiDicLocation());
+		ComponentsParser componentsParser = new ComponentsParser(Config.getComponentsDicLocation());
+
+		// Setup DB providers
 		KanjiProvider kanjiProvider = new KanjiProvider(Config.getKanjiDbLocation());
 		kanjiProvider.createTable();
 
-		ComponentsParser radicalParser = new ComponentsParser(Config.getRadicalDicLocation());
-
 		long start = System.currentTimeMillis();
-		log.info("Adding kanji");
-		kanjiProvider.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
-		log.info("Adding components");
-		kanjiProvider.addRadicals(radicalParser.parse(Config.getKanjiParseLimit()));
-		long end = System.currentTimeMillis();
-		log.info("Done, took " + ((end - start) / 1000.0) + " seconds.");
 
+		log.info("Adding kanji");
+
+		kanjiProvider.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
+
+		log.info("Adding components");
+
+		kanjiProvider.addComponents(componentsParser.parse(Config.getKanjiParseLimit()));
 		kanjiProvider.close();
+
+		long end = System.currentTimeMillis();
+
+		log.info("Done, took " + ((end - start) / 1000.0) + " seconds.");
 	}
 }

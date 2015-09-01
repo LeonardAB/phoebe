@@ -94,7 +94,7 @@ public class Config {
 	 *
 	 * @return Where to find the KRADX file.
 	 */
-	public static String getRadicalDicLocation() {
-		return properties.getProperty("radicals.dict.location", KRADX_LOCATION);
+	public static String getComponentsDicLocation() {
+		return properties.getProperty("components.dict.location", KRADX_LOCATION);
 	}
 }

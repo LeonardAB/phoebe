@@ -142,11 +142,11 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Merge kanji radicals from a list of {@link Components} into the kanji database.
+	 * Merge kanji components from a list of {@link Components} into the kanji database.
 	 *
-	 * @param radicals The list of radicals to insert into the database.
+	 * @param components The list of components to insert into the database.
 	 */
-	public void addRadicals(List<Components> radicals) {
+	public void addComponents(List<Components> components) {
 		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
 
 		try {
@@ -155,11 +155,11 @@ public class KanjiProvider extends DatabaseProvider {
 			PreparedStatement pStatement = getConnection().prepareStatement(update);
 			getConnection().setAutoCommit(false);
 
-			for(Components radical : radicals) {
-				log.debug("Inserting components for kanji: " + radical.getLiteral());
+			for(Components component : components) {
+				log.debug("Inserting components for kanji: " + component.getLiteral());
 
-				pStatement.setString(1, radical.getComponents());
-				pStatement.setString(2, radical.getLiteral());
+				pStatement.setString(1, component.getComponents());
+				pStatement.setString(2, component.getLiteral());
 				pStatement.addBatch();
 			}
 
