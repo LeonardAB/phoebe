@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * A base database helper.
  *
@@ -15,6 +18,8 @@ public abstract class DatabaseHelper {
 	 */
 	private Connection connection = null;
 
+	private static Logger log = LogManager.getLogger(DatabaseHelper.class);
+
 	/**
 	 * DatabaseHelper constructor.
 	 *
@@ -22,14 +27,14 @@ public abstract class DatabaseHelper {
 	 */
 	public DatabaseHelper(String fileName) {
 		try {
+			log.info("Opening database: " + fileName);
+
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + fileName);
-			System.out.println("Opened DB");
 		} catch(SQLException e) {
-			System.err.println("Couldn't open the DB. Details below.");
-			e.printStackTrace();
+			log.error("Could not open the database.", e);
 		} catch(ClassNotFoundException e) {
-			System.err.println("Couldn't find the SQLite JDBC driver. Make sure it's in your classpath!");
+			log.error("Could not locate the SQLite JDBC driver in the classpath.");
 		}
 	}
 
@@ -48,10 +53,11 @@ public abstract class DatabaseHelper {
 	public void close() {
 		if(connection != null) {
 			try {
+				log.info("Closing database");
+
 				connection.close();
-				System.out.println("Closed DB");
 			} catch(SQLException e) {
-				e.printStackTrace();
+				log.error("Could not close the database.", e);
 			}
 		}
 	}

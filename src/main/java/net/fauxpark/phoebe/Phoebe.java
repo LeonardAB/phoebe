@@ -1,15 +1,21 @@
 package net.fauxpark.phoebe;
 
 import net.fauxpark.phoebe.parser.KanjiParser;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.fauxpark.phoebe.parser.ComponentsParser;
 import net.fauxpark.phoebe.provider.KanjiProvider;
 
 public class Phoebe {
+	private static final Logger log = LogManager.getLogger(Phoebe.class);
+
 	public static void main(String[] args) {
 		try {
 			Config.load();
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Could not load configuration.", e);
 			System.exit(1);
 		}
 
@@ -20,12 +26,12 @@ public class Phoebe {
 		ComponentsParser radicalParser = new ComponentsParser(Config.getRadicalDicLocation());
 
 		long start = System.currentTimeMillis();
-		System.out.println("Adding kanji...");
+		log.info("Adding kanji");
 		kanjiProvider.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
-		System.out.println("Adding radicals...");
+		log.info("Adding components");
 		kanjiProvider.addRadicals(radicalParser.parse(Config.getKanjiParseLimit()));
 		long end = System.currentTimeMillis();
-		System.out.println("Done, took " + ((end - start) / 1000.0) + " seconds.");
+		log.info("Done, took " + ((end - start) / 1000.0) + " seconds.");
 
 		kanjiProvider.close();
 	}

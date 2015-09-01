@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * A simple configuration class.
  *
@@ -34,6 +37,8 @@ public class Config {
 
 	private static Properties properties = new Properties();
 
+	private static final Logger log = LogManager.getLogger(Config.class);
+
 	/**
 	 * Load configuration.
 	 *
@@ -46,10 +51,10 @@ public class Config {
 			FileInputStream inputStream = new FileInputStream(file);
 			properties.load(inputStream);
 
-			System.out.println("Loaded configuration from " + file.getAbsolutePath());
+			log.info("Loaded configuration from " + file.getAbsolutePath());
 		} catch(FileNotFoundException e) {
-			System.err.println("Could not find properties file at \"" + file.getAbsolutePath() + "\"!");
-			System.err.println("Attempting to use default values instead.");
+			log.warn("Could not find properties file at \"" + file.getAbsolutePath() + "\"!");
+			log.warn("Attempting to use default values instead.");
 		}
 	}
 

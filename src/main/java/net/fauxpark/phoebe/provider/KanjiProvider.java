@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.fauxpark.phoebe.helper.KanjiDatabaseHelper;
 import net.fauxpark.phoebe.model.Kanji;
 import net.fauxpark.phoebe.model.Components;
@@ -17,6 +20,7 @@ import net.fauxpark.phoebe.model.Components;
  * @author fauxpark
  */
 public class KanjiProvider extends DatabaseProvider {
+	private static final Logger log = LogManager.getLogger(KanjiProvider.class);
 	/**
 	 * KanjiProvider constructor.
 	 *
@@ -38,11 +42,13 @@ public class KanjiProvider extends DatabaseProvider {
 			"components TEXT)";
 
 		try {
+			log.info("Creating kanji table");
+
 			Statement statement = getConnection().createStatement();
 			statement.executeUpdate(schema);
 			statement.close();
 		} catch(SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Exception occurred.", e);
 		}
 	}
 
@@ -58,10 +64,14 @@ public class KanjiProvider extends DatabaseProvider {
 			") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
+			log.info("Inserting kanji records");
+
 			getConnection().setAutoCommit(false);
 			PreparedStatement pStatement = getConnection().prepareStatement(insert);
 
 			for(Kanji kanji : kanjis) {
+				log.debug("Inserting kanji: " + kanji.getLiteral());
+
 				pStatement.setString(1, kanji.getLiteral());
 				pStatement.setString(2, kanji.getCodepoint());
 				pStatement.setInt(3, kanji.getRadical());
@@ -127,7 +137,7 @@ public class KanjiProvider extends DatabaseProvider {
 			pStatement.close();
 			getConnection().setAutoCommit(true);
 		} catch(SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Exception occurred.", e);
 		}
 	}
 
@@ -140,10 +150,14 @@ public class KanjiProvider extends DatabaseProvider {
 		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
 
 		try {
+			log.info("Inserting kanji components");
+
 			PreparedStatement pStatement = getConnection().prepareStatement(update);
 			getConnection().setAutoCommit(false);
 
 			for(Components radical : radicals) {
+				log.debug("Inserting components for kanji: " + radical.getLiteral());
+
 				pStatement.setString(1, radical.getComponents());
 				pStatement.setString(2, radical.getLiteral());
 				pStatement.addBatch();
@@ -154,7 +168,7 @@ public class KanjiProvider extends DatabaseProvider {
 			pStatement.close();
 			getConnection().setAutoCommit(true);
 		} catch(SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Exception occurred.", e);
 		}
 	}
 
@@ -179,7 +193,7 @@ public class KanjiProvider extends DatabaseProvider {
 				return result;
 			}
 		} catch(SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Exception occurred.", e);
 		}
 
 		return null;

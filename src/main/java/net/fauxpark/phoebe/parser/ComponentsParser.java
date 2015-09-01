@@ -3,6 +3,8 @@ package net.fauxpark.phoebe.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -19,23 +21,21 @@ public class ComponentsParser extends Parser<Components> {
 	 */
 	private NodeList characters;
 
+	private static final Logger log = LogManager.getLogger(ComponentsParser.class);
+
 	/**
 	 * Creates a new {@link ComponentsParser}.
 	 *
 	 * @param fileName The location of the kradx.xml file.
-	 * @throws UnsupportedOperationException if the root element is not &lt;kradx&gt;.
 	 */
-	public ComponentsParser(String fileName) throws UnsupportedOperationException {
-		super(fileName);
+	public ComponentsParser(String fileName) {
+		super(fileName, "kradx");
 
-		if(!document.getDocumentElement().getTagName().equals("kradx")) {
-			throw new UnsupportedOperationException("This is not a KRADX file!");
-		}
+		String fileVersion = document.getElementsByTagName("file_version").item(0).getTextContent();
+		String dbVersion = document.getElementsByTagName("database_version").item(0).getTextContent();
+		String creationDate = document.getElementsByTagName("date_of_creation").item(0).getTextContent();
 
-		System.out.println("KRADX Version " + document.getElementsByTagName("file_version").item(0).getTextContent());
-		System.out.println("Database Version " + document.getElementsByTagName("database_version").item(0).getTextContent());
-		System.out.println("DB Creation Date " + document.getElementsByTagName("date_of_creation").item(0).getTextContent());
-		System.out.println();
+		log.info("KRADX Version " + fileVersion + " (" + dbVersion + "), created " + creationDate);
 
 		characters = document.getElementsByTagName("radical");
 	}
@@ -51,10 +51,12 @@ public class ComponentsParser extends Parser<Components> {
 		List<Components> components = new ArrayList<>();
 
 		if(limit == null || limit > characters.getLength()) {
+			log.debug("Invalid parse limit: " + limit + ". Parsing all entries.");
+
 			limit = characters.getLength();
 		}
 
-		System.out.println("Parsing " + limit + " radicals.");
+		log.info("Parsing " + limit + " entries.");
 
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));

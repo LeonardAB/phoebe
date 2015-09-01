@@ -6,6 +6,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,18 +31,27 @@ public abstract class Parser<T> {
 	 */
 	protected Element character;
 
+	private static final Logger log = LogManager.getLogger(Parser.class);
+
 	/**
 	 * Parser constructor.
 	 *
-	 * @param fileName the input .xml document to parse into a {@link Document}.
+	 * @param fileName The input .xml document to parse into a {@link Document}.
+	 * @param rootTag The root tag which the document must have.
 	 */
-	public Parser(String fileName) {
+	public Parser(String fileName, String rootTag) {
 		try {
 			DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dFactory.newDocumentBuilder();
 			document = dBuilder.parse(new File(fileName));
+
+			log.info("Parsed file: " + fileName);
+
+			if(!document.getDocumentElement().getTagName().equals(rootTag)) {
+				throw new UnsupportedOperationException("Root tag \"" + rootTag + "\" not found.");
+			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.error("Could not parse the XML document.", e);
 		}
 	}
 

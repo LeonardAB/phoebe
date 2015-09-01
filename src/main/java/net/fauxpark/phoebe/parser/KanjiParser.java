@@ -3,6 +3,8 @@ package net.fauxpark.phoebe.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,23 +22,21 @@ public class KanjiParser extends Parser<Kanji> {
 	 */
 	private NodeList characters;
 
+	private static final Logger log = LogManager.getLogger(KanjiParser.class);
+
 	/**
 	 * Creates a new {@link KanjiParser}.
 	 *
 	 * @param fileName The location of the kanjidic2.xml file.
-	 * @throws UnsupportedOperationException if the root element is not &lt;kanjidic2&gt;.
 	 */
-	public KanjiParser(String fileName) throws UnsupportedOperationException {
-		super(fileName);
+	public KanjiParser(String fileName) {
+		super(fileName, "kanjidic2");
 
-		if(!document.getDocumentElement().getTagName().equals("kanjidic2")) {
-			throw new UnsupportedOperationException("This is not a KANJIDIC2 file!");
-		}
+		String fileVersion = document.getElementsByTagName("file_version").item(0).getTextContent();
+		String dbVersion = document.getElementsByTagName("database_version").item(0).getTextContent();
+		String creationDate = document.getElementsByTagName("date_of_creation").item(0).getTextContent();
 
-		System.out.println("KANJIDIC Version " + document.getElementsByTagName("file_version").item(0).getTextContent());
-		System.out.println("Database Version " + document.getElementsByTagName("database_version").item(0).getTextContent());
-		System.out.println("DB Creation Date " + document.getElementsByTagName("date_of_creation").item(0).getTextContent());
-		System.out.println();
+		log.info("KANJIDIC2 Version " + fileVersion + " (" + dbVersion + "), created " + creationDate);
 
 		characters = document.getElementsByTagName("character");
 	}
@@ -52,10 +52,12 @@ public class KanjiParser extends Parser<Kanji> {
 		List<Kanji> kanjis = new ArrayList<>();
 
 		if(limit == null || limit > characters.getLength()) {
+			log.debug("Invalid parse limit: " + limit + ". Parsing all entries.");
+
 			limit = characters.getLength();
 		}
 
-		System.out.println("Parsing " + limit + " characters.");
+		log.info("Parsing " + limit + " entries.");
 
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));
