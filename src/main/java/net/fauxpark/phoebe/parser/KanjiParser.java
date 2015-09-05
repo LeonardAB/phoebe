@@ -97,7 +97,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 * @return A UCS codepoint as a string.
 	 */
 	private String getCodepoint() {
-		return getByTagAttributeValue("cp_value", "cp_type", "ucs");
+		return getByTagAttributeValue("cp_value", "cp_type", "ucs").toLowerCase();
 	}
 
 	/**
