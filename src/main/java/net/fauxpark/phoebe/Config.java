@@ -40,6 +40,11 @@ public class Config {
 	 */
 	private static final String RADICALS_LOCATION = "radicals.xml";
 
+	/**
+	 * Default location of the WHITERABBIT file.
+	 */
+	private static final String WHITERABBIT_LOCATION = "whiterabbit.xml";
+
 	private static Properties properties = new Properties();
 
 	private static final Logger log = LogManager.getLogger(Config.class);
@@ -110,5 +115,14 @@ public class Config {
 	 */
 	public static String getRadicalsDicLocation() {
 		return properties.getProperty("radicals.dict.location", RADICALS_LOCATION);
+	}
+
+	/**
+	 * Get the location of the WHITERABBIT file, defaulting to {@value #WHITERABBIT_LOCATION} if absent.
+	 *
+	 * @return Where to find the WHITERABBIT file.
+	 */
+	public static String getWhiteRabbitDicLocation() {
+		return properties.getProperty("whiterabbit.dict.location", WHITERABBIT_LOCATION);
 	}
 }

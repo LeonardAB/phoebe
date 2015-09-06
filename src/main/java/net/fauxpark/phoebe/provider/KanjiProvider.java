@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import net.fauxpark.phoebe.helper.KanjiDatabaseHelper;
 import net.fauxpark.phoebe.model.Kanji;
 import net.fauxpark.phoebe.model.Radical;
+import net.fauxpark.phoebe.model.WhiteRabbitIndex;
 import net.fauxpark.phoebe.model.Components;
 
 /**
@@ -37,10 +38,9 @@ public class KanjiProvider extends DatabaseProvider {
 	public void createTables() {
 		String schemaKanji = "CREATE TABLE IF NOT EXISTS kanji (" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT UNIQUE NOT NULL, " +
-			"codepoint TEXT NOT NULL, radical INTEGER NOT NULL, grade INTEGER, " +
-			"stroke_count INTEGER NOT NULL, frequency INTEGER, jlpt INTEGER, heisig INTEGER, " +
-			"skip TEXT, four_corner TEXT, onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT, " +
-			"components TEXT)";
+			"codepoint TEXT NOT NULL, radical INTEGER NOT NULL, grade INTEGER, stroke_count INTEGER NOT NULL, " +
+			"frequency INTEGER, jlpt INTEGER, heisig INTEGER, white_rabbit TEXT, skip TEXT, four_corner TEXT, " +
+			"onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT, components TEXT)";
 		String schemaRadicals = "CREATE TABLE IF NOT EXISTS radicals (" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT NOT NULL, " +
 			"name TEXT NOT NULL, stroke_count INTEGER NOT NULL, variants TEXT)";
@@ -204,6 +204,38 @@ public class KanjiProvider extends DatabaseProvider {
 					pStatement.setNull(4, Types.VARCHAR);
 				}
 
+				pStatement.addBatch();
+			}
+
+			pStatement.executeBatch();
+			getConnection().commit();
+			pStatement.close();
+			getConnection().setAutoCommit(true);
+		} catch(SQLException e) {
+			log.error("SQL Exception occurred.", e);
+		}
+	}
+
+	/**
+	 * Merge White Rabbit indexes from a list of {@link WhiteRabbitIndex} into the kanji database.
+	 *
+	 * @param indexes The list of indexes to insert into the database.
+	 */
+	public void addWhiteRabbitIndexes(List<WhiteRabbitIndex> indexes) {
+		String update = "UPDATE kanji SET white_rabbit = ? WHERE literal = ? OR literal = ?";
+
+		try {
+			log.info("Inserting White Rabbit indexes");
+
+			PreparedStatement pStatement = getConnection().prepareStatement(update);
+			getConnection().setAutoCommit(false);
+
+			for(WhiteRabbitIndex index : indexes) {
+				log.debug("Inserting White Rabbit index for kanji: " + index.getLiteral());
+
+				pStatement.setString(1, index.getIndex());
+				pStatement.setString(2, index.getLiteral());
+				pStatement.setString(3, index.getVariant());
 				pStatement.addBatch();
 			}
 

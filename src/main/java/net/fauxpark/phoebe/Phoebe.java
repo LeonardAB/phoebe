@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import net.fauxpark.phoebe.parser.ComponentsParser;
 import net.fauxpark.phoebe.parser.KanjiParser;
 import net.fauxpark.phoebe.parser.RadicalsParser;
+import net.fauxpark.phoebe.parser.WhiteRabbitParser;
 import net.fauxpark.phoebe.provider.KanjiProvider;
 
 public class Phoebe {
@@ -23,6 +24,7 @@ public class Phoebe {
 		KanjiParser kanjiParser = new KanjiParser(Config.getKanjiDicLocation());
 		ComponentsParser componentsParser = new ComponentsParser(Config.getComponentsDicLocation());
 		RadicalsParser radicalsParser = new RadicalsParser(Config.getRadicalsDicLocation());
+		WhiteRabbitParser whiteRabbitParser = new WhiteRabbitParser(Config.getWhiteRabbitDicLocation());
 
 		// Setup DB providers
 		KanjiProvider kanjiProvider = new KanjiProvider(Config.getKanjiDbLocation());
@@ -41,6 +43,10 @@ public class Phoebe {
 		log.info("Adding radicals");
 
 		kanjiProvider.addRadicals(radicalsParser.parse(null));
+
+		log.info("Adding White Rabbit indexes");
+
+		kanjiProvider.addWhiteRabbitIndexes(whiteRabbitParser.parse(null));
 
 		kanjiProvider.close();
 
