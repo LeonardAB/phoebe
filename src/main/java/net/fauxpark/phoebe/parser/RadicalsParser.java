@@ -49,53 +49,13 @@ public class RadicalsParser extends Parser<Radical> {
 		for(int i = 0; i < characters.getLength(); i++) {
 			setElement(characters.item(i));
 			Radical radical = new Radical();
-			radical.setLiteral(getLiteral());
-			radical.setName(getName());
-			radical.setStrokeCount(getStrokeCount());
-			radical.setVariants(getVariants());
+			radical.setLiteral(getByTagName("literal"));
+			radical.setName(getByTagName("name"));
+			radical.setStrokeCount(getByTagNameInt("stroke_count"));
+			radical.setVariants(getByTagName("variants"));
 			radicals.add(radical);
 		}
 
 		return radicals;
-	}
-
-	/**
-	 * Get the current radical's literal.
-	 *
-	 * @return A radical literal in UTF-8 encoding.
-	 */
-	private String getLiteral() {
-		return getByTagName("literal");
-	}
-
-	/**
-	 * Get the current radical's name.
-	 *
-	 * @return A comma-separated list of the radical's names.
-	 */
-	private String getName() {
-		return getByTagName("name");
-	}
-
-	/**
-	 * Get the current radical's stroke count.
-	 *
-	 * @return The number of strokes it takes to draw the radical, or null.
-	 */
-	private Integer getStrokeCount() {
-		try {
-			return Integer.parseInt(getByTagName("stroke_count"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current radical's variants.
-	 *
-	 * @return A string containing the variants on the radical, or null.
-	 */
-	private String getVariants() {
-		return getByTagName("variants");
 	}
 }

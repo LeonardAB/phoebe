@@ -62,16 +62,16 @@ public class KanjiParser extends Parser<Kanji> {
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));
 			Kanji kanji = new Kanji();
-			kanji.setLiteral(getLiteral());
-			kanji.setCodepoint(getCodepoint());
-			kanji.setRadical(getRadical());
-			kanji.setGrade(getGrade());
-			kanji.setStrokeCount(getStrokeCount());
-			kanji.setFrequency(getFrequency());
-			kanji.setJlpt(getJlpt());
-			kanji.setHeisig(getHeisig());
-			kanji.setSkip(getSkip());
-			kanji.setFourCorner(getFourCorner());
+			kanji.setLiteral(getByTagName("literal"));
+			kanji.setCodepoint(getByTagAttributeValue("cp_value", "cp_type", "ucs").toLowerCase());
+			kanji.setRadical(getByTagAttributeValueInt("rad_value", "rad_type", "classical"));
+			kanji.setGrade(getByTagNameInt("grade"));
+			kanji.setStrokeCount(getByTagNameInt("stroke_count"));
+			kanji.setFrequency(getByTagNameInt("frequency"));
+			kanji.setJlpt(getByTagNameInt("jlpt"));
+			kanji.setHeisig(getByTagAttributeValueInt("dic_ref", "dr_type", "heisig"));
+			kanji.setSkip(getByTagAttributeValue("q_code", "qc_type", "skip"));
+			kanji.setFourCorner(getByTagAttributeValue("q_code", "qc_type", "four_corner"));
 			kanji.setOnyomi(getOnyomi());
 			kanji.setKunyomi(getKunyomi());
 			kanji.setNanori(getNanori());
@@ -80,120 +80,6 @@ public class KanjiParser extends Parser<Kanji> {
 		}
 
 		return kanjis;
-	}
-
-	/**
-	 * Get the current kanji's literal.
-	 *
-	 * @return A kanji literal in UTF-8 encoding.
-	 */
-	private String getLiteral() {
-		return getByTagName("literal");
-	}
-
-	/**
-	 * Get the current kanji's UCS codepoint.
-	 *
-	 * @return A UCS codepoint as a string.
-	 */
-	private String getCodepoint() {
-		return getByTagAttributeValue("cp_value", "cp_type", "ucs").toLowerCase();
-	}
-
-	/**
-	 * Get the current kanji's radical number.
-	 *
-	 * @return A number between 1 and 214 representing the KangXi radical of the kanji.
-	 */
-	private Integer getRadical() {
-		try {
-			return Integer.parseInt(getByTagAttributeValue("rad_value", "rad_type", "classical"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's grade.
-	 *
-	 * @return A number between 1 and 10 denoting the kanji's grade level, or null.
-	 */
-	private Integer getGrade() {
-		try {
-			return Integer.parseInt(getByTagName("grade"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's stroke count.
-	 *
-	 * @return The number of strokes it takes to draw the kanji, or null.
-	 */
-	private Integer getStrokeCount() {
-		try {
-			return Integer.parseInt(getByTagName("stroke_count"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's frequency.
-	 *
-	 * @return A number from 1 to 2500 denoting the general frequency of the kanji in newspapers, or null.
-	 */
-	private Integer getFrequency() {
-		try {
-			return Integer.parseInt(getByTagName("freq"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's (former) JLPT level.
-	 *
-	 * @return A number from 1 to 4 denoting the former JLPT level of the kanji, or null.
-	 */
-	private Integer getJlpt() {
-		try {
-			return Integer.parseInt(getByTagName("jlpt"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's Heisig index.
-	 *
-	 * @return A Heisig index for the kanji, or null.
-	 */
-	private Integer getHeisig() {
-		try {
-			return Integer.parseInt(getByTagAttributeValue("dic_ref", "dr_type", "heisig"));
-		} catch(NumberFormatException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the current kanji's SKIP (System of Kanji Indexing by Patterns) code.
-	 *
-	 * @return A SKIP code for the kanji.
-	 */
-	private String getSkip() {
-		return getByTagAttributeValue("q_code", "qc_type", "skip");
-	}
-
-	/**
-	 * Get the current kanji's four corner code.
-	 *
-	 * @return A four corner code for the kanji.
-	 */
-	private String getFourCorner() {
-		return getByTagAttributeValue("q_code", "qc_type", "four_corner");
 	}
 
 	/**

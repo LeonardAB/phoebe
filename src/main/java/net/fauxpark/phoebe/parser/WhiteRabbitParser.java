@@ -49,39 +49,12 @@ public class WhiteRabbitParser extends Parser<WhiteRabbitIndex> {
 		for(int i = 0; i < characters.getLength(); i++) {
 			setElement(characters.item(i));
 			WhiteRabbitIndex index = new WhiteRabbitIndex();
-			index.setLiteral(getLiteral());
-			index.setIndex(getIndex());
-			index.setVariant(getVariant());
+			index.setLiteral(getByTagName("literal"));
+			index.setIndex(getByTagName("index"));
+			index.setVariant(getByTagName("variant"));
 			indexes.add(index);
 		}
 
 		return indexes;
-	}
-
-	/**
-	 * Get the current kanji's literal.
-	 *
-	 * @return A kanji literal in UTF-8 encoding.
-	 */
-	private String getLiteral() {
-		return getByTagName("literal");
-	}
-
-	/**
-	 * Get the current kanji's index.
-	 *
-	 * @return A numeric string from 1 to 1945, or N1 to N196 for the New Jōyō kanji.
-	 */
-	private String getIndex() {
-		return getByTagName("index");
-	}
-
-	/**
-	 * Get the current kanji's JIS X 0208 variant.
-	 *
-	 * @return A kanji literal in UTF-8 encoding.
-	 */
-	private String getVariant() {
-		return getByTagName("variant");
 	}
 }

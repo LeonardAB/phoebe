@@ -89,6 +89,20 @@ public abstract class Parser<T> {
 	}
 
 	/**
+	 * Retrieve the contents of the first element with the specified tag name, as an Integer.
+	 *
+	 * @param tag Tag name to search for.
+	 * @return Numerical representation of the tag's contents, or null if nothing was found.
+	 */
+	protected Integer getByTagNameInt(String tag) {
+		try {
+			return Integer.parseInt(getByTagName(tag));
+		} catch(NumberFormatException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * Retrieve text content of the first element with matching tag name, attribute and attribute value.
 	 *
 	 * @param tag Tag name to search for.
@@ -109,5 +123,21 @@ public abstract class Parser<T> {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Retrieve the contents of the first element with matching tag name, attribute and attribute value, as an Integer.
+	 *
+	 * @param tag Tag name to search for.
+	 * @param attr Name of the attribute.
+	 * @param value Value of the attribute.
+	 * @return Numerical representation of the tag's contents, or null if nothing was found.
+	 */
+	protected Integer getByTagAttributeValueInt(String tag, String attr, String value) {
+		try {
+			return Integer.parseInt(getByTagAttributeValue(tag, attr, value));
+		} catch(NumberFormatException e) {
+			return null;
+		}
 	}
 }

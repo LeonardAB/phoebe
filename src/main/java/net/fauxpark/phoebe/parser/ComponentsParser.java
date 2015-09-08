@@ -61,29 +61,11 @@ public class ComponentsParser extends Parser<Components> {
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));
 			Components component = new Components();
-			component.setLiteral(getLiteral());
-			component.setComponents(getComponents());
+			component.setLiteral(getByTagName("literal"));
+			component.setComponents(getByTagName("components"));
 			components.add(component);
 		}
 
 		return components;
-	}
-
-	/**
-	 * Get the current kanji's literal.
-	 *
-	 * @return A kanji literal in UTF-8 encoding.
-	 */
-	private String getLiteral() {
-		return getByTagName("literal");
-	}
-
-	/**
-	 * Get the current kanji's components.
-	 *
-	 * @return The components of the kanji in UTF-8 encoding.
-	 */
-	private String getComponents() {
-		return getByTagName("components");
 	}
 }
