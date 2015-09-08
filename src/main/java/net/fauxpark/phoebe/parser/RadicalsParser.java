@@ -51,6 +51,7 @@ public class RadicalsParser extends Parser<Radical> {
 			Radical radical = new Radical();
 			radical.setLiteral(getByTagName("literal"));
 			radical.setName(getByTagName("name"));
+			radical.setReading(getByTagName("reading"));
 			radical.setStrokeCount(getByTagNameInt("stroke_count"));
 			radical.setVariants(getByTagName("variants"));
 			radicals.add(radical);

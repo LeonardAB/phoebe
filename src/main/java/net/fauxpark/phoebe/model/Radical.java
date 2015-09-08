@@ -17,6 +17,11 @@ public class Radical {
 	private String name;
 
 	/**
+	 * The Japanese name of the radical in hiragana.
+	 */
+	private String reading;
+
+	/**
 	 * The stroke count of the radical.
 	 */
 	private Integer strokeCount;
@@ -40,6 +45,14 @@ public class Radical {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getReading() {
+		return reading;
+	}
+
+	public void setReading(String reading) {
+		this.reading = reading;
 	}
 
 	public Integer getStrokeCount() {

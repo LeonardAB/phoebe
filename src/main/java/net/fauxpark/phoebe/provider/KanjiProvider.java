@@ -43,7 +43,7 @@ public class KanjiProvider extends DatabaseProvider {
 			"onyomi TEXT, kunyomi TEXT, nanori TEXT, meanings TEXT, components TEXT)";
 		String schemaRadicals = "CREATE TABLE IF NOT EXISTS radicals (" +
 			"id INTEGER PRIMARY KEY AUTOINCREMENT, literal TEXT NOT NULL, " +
-			"name TEXT NOT NULL, stroke_count INTEGER NOT NULL, variants TEXT)";
+			"name TEXT NOT NULL, reading TEXT NOT NULL, stroke_count INTEGER NOT NULL, variants TEXT)";
 
 		try {
 			log.info("Creating kanji database tables");
@@ -183,7 +183,7 @@ public class KanjiProvider extends DatabaseProvider {
 	 * @param radicals The list of radicals to insert into the database.
 	 */
 	public void addRadicals(List<Radical> radicals) {
-		String update = "INSERT INTO radicals (literal, name, stroke_count, variants) VALUES (?, ?, ?, ?)";
+		String update = "INSERT INTO radicals (literal, name, reading, stroke_count, variants) VALUES (?, ?, ?, ?, ?)";
 
 		try {
 			log.info("Inserting kanji radicals");
@@ -196,12 +196,13 @@ public class KanjiProvider extends DatabaseProvider {
 
 				pStatement.setString(1, radical.getLiteral());
 				pStatement.setString(2, radical.getName());
-				pStatement.setInt(3, radical.getStrokeCount());
+				pStatement.setString(3, radical.getReading());
+				pStatement.setInt(4, radical.getStrokeCount());
 
 				if(radical.getVariants() != null) {
-					pStatement.setString(4, radical.getVariants());
+					pStatement.setString(5, radical.getVariants());
 				} else {
-					pStatement.setNull(4, Types.VARCHAR);
+					pStatement.setNull(5, Types.VARCHAR);
 				}
 
 				pStatement.addBatch();
