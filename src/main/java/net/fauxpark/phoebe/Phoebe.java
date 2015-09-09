@@ -1,5 +1,7 @@
 package net.fauxpark.phoebe;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,30 +17,33 @@ public class Phoebe {
 	public static void main(String[] args) {
 		try {
 			Config.load();
-		} catch(Exception e) {
-			log.error("Could not load configuration.", e);
+		} catch(IOException e) {
+			log.error("Could not load default configuration.", e);
+
 			System.exit(1);
 		}
 
 		// Setup parsers
-		KanjiParser kanjiParser = new KanjiParser(Config.getKanjiDicLocation());
-		ComponentsParser componentsParser = new ComponentsParser(Config.getComponentsDicLocation());
-		RadicalsParser radicalsParser = new RadicalsParser(Config.getRadicalsDicLocation());
-		WhiteRabbitParser whiteRabbitParser = new WhiteRabbitParser(Config.getWhiteRabbitDicLocation());
+		KanjiParser kanjiParser = new KanjiParser(Config.getString("dic.kanji.location"));
+		ComponentsParser componentsParser = new ComponentsParser(Config.getString("dic.components.location"));
+		RadicalsParser radicalsParser = new RadicalsParser(Config.getString("dic.radicals.location"));
+		WhiteRabbitParser whiteRabbitParser = new WhiteRabbitParser(Config.getString("dic.whiterabbit.location"));
 
 		// Setup DB providers
-		KanjiProvider kanjiProvider = new KanjiProvider(Config.getKanjiDbLocation());
+		KanjiProvider kanjiProvider = new KanjiProvider(Config.getString("db.kanji.location"));
 		kanjiProvider.createTables();
 
 		long start = System.currentTimeMillis();
 
 		log.info("Adding kanji");
 
-		kanjiProvider.addKanji(kanjiParser.parse(Config.getKanjiParseLimit()));
+		Integer parseLimit = Config.getInt("dic.kanji.parselimit");
+
+		kanjiProvider.addKanji(kanjiParser.parse(parseLimit));
 
 		log.info("Adding components");
 
-		kanjiProvider.addComponents(componentsParser.parse(Config.getKanjiParseLimit()));
+		kanjiProvider.addComponents(componentsParser.parse(parseLimit));
 
 		log.info("Adding radicals");
 

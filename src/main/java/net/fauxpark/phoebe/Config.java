@@ -2,8 +2,8 @@ package net.fauxpark.phoebe;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,30 +21,13 @@ public class Config {
 	private static final String PROPERTIES_LOCATION = "phoebe.properties";
 
 	/**
-	 * Default location of the KANJIDIC2 file.
+	 * The default configuration.
 	 */
-	private static final String KANJIDIC_LOCATION = "kanjidic2.xml";
+	private static Properties defaultProperties = new Properties();
 
 	/**
-	 * Default location of the resulting kanji database.
+	 * The user-supplied configuration, if it exists.
 	 */
-	private static final String KANJIDB_LOCATION = "kanji.db";
-
-	/**
-	 * Default location of the KRADX file.
-	 */
-	private static final String KRADX_LOCATION = "kradx.xml";
-
-	/**
-	 * Default location of the RADICALS file.
-	 */
-	private static final String RADICALS_LOCATION = "radicals.xml";
-
-	/**
-	 * Default location of the WHITERABBIT file.
-	 */
-	private static final String WHITERABBIT_LOCATION = "whiterabbit.xml";
-
 	private static Properties properties = new Properties();
 
 	private static final Logger log = LogManager.getLogger(Config.class);
@@ -52,77 +35,53 @@ public class Config {
 	/**
 	 * Load configuration.
 	 *
-	 * @throws IOException if an error occurred when loading the properties file.
+	 * @throws IOException if the default configuration could not be read.
 	 */
 	public static void load() throws IOException {
+		InputStream is = Config.class.getClassLoader().getResourceAsStream(PROPERTIES_LOCATION);
+		defaultProperties.load(is);
 		File file = new File(PROPERTIES_LOCATION);
+		String path = file.getAbsolutePath();
 
-		try {
-			FileInputStream inputStream = new FileInputStream(file);
-			properties.load(inputStream);
+		if(file.exists()) {
+			try {
+				InputStream fis = new FileInputStream(file);
+				properties.load(fis);
 
-			log.info("Loaded configuration from " + file.getAbsolutePath());
-		} catch(FileNotFoundException e) {
-			log.warn("Could not find properties file at \"" + file.getAbsolutePath() + "\"!");
-			log.warn("Attempting to use default values instead.");
+				if(properties.size() > 0) {
+					log.info("Loaded configuration from " + path);
+				} else {
+					log.warn("No properties defined in " + path + ". Using default values instead.");
+				}
+			} catch(Exception e) {
+				log.error("Error while reading properties file.", e);
+			}
+		} else {
+			log.info("Could not find properties file at " + path + ". Using default values instead.");
 		}
 	}
 
 	/**
-	 * Get the number of kanji to parse, defaulting to null if absent.
+	 * Retrieve a string from the properties.
 	 *
-	 * @return The number of kanji to parse.
+	 * @param property The property key to get.
+	 * @return The value of the property, or null.
 	 */
-	public static Integer getKanjiParseLimit() {
-		try{
-			return Integer.parseInt(properties.getProperty("kanji.parselimit"));
+	public static String getString(String property) {
+		return properties.getProperty(property, defaultProperties.getProperty(property, null));
+	}
+
+	/**
+	 * Retrieve an integer from the properties.
+	 *
+	 * @param property The property key to get.
+	 * @return The value of the property, or null.
+	 */
+	public static Integer getInt(String property) {
+		try {
+			return Integer.parseInt(getString(property));
 		} catch(NumberFormatException e) {
 			return null;
 		}
-	}
-
-	/**
-	 * Get the location of the KANJIDIC2 file, defaulting to {@value #KANJIDIC_LOCATION} if absent.
-	 *
-	 * @return Where to find the KANJIDIC2 file.
-	 */
-	public static String getKanjiDicLocation() {
-		return properties.getProperty("kanji.dict.location", KANJIDIC_LOCATION);
-	}
-
-	/**
-	 * Get the location of the resulting kanji database, defaulting to {@value #KANJIDB_LOCATION} if absent.
-	 *
-	 * @return Where to place the resulting kanji database.
-	 */
-	public static String getKanjiDbLocation() {
-		return properties.getProperty("kanji.db.location", KANJIDB_LOCATION);
-	}
-
-	/**
-	 * Get the location of the KRADX file, defaulting to {@value #KRADX_LOCATION} if absent.
-	 *
-	 * @return Where to find the KRADX file.
-	 */
-	public static String getComponentsDicLocation() {
-		return properties.getProperty("components.dict.location", KRADX_LOCATION);
-	}
-
-	/**
-	 * Get the location of the RADICALS file, defaulting to {@value #RADICALS_LOCATION} if absent.
-	 *
-	 * @return Where to find the RADICALS file.
-	 */
-	public static String getRadicalsDicLocation() {
-		return properties.getProperty("radicals.dict.location", RADICALS_LOCATION);
-	}
-
-	/**
-	 * Get the location of the WHITERABBIT file, defaulting to {@value #WHITERABBIT_LOCATION} if absent.
-	 *
-	 * @return Where to find the WHITERABBIT file.
-	 */
-	public static String getWhiteRabbitDicLocation() {
-		return properties.getProperty("whiterabbit.dict.location", WHITERABBIT_LOCATION);
 	}
 }
