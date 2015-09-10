@@ -29,7 +29,7 @@ public class RadicalsParser extends Parser<Radical> {
 	 * @param fileName The location of the radicals.xml file.
 	 */
 	public RadicalsParser(String fileName) {
-		super(fileName, "radicals");
+		super(fileName, "radic");
 
 		characters = document.getElementsByTagName("radical");
 	}

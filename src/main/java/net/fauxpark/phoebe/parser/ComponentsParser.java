@@ -37,7 +37,7 @@ public class ComponentsParser extends Parser<Components> {
 
 		log.info("KRADX Version " + fileVersion + " (" + dbVersion + "), created " + creationDate);
 
-		characters = document.getElementsByTagName("radical");
+		characters = document.getElementsByTagName("kanji");
 	}
 
 	/**
