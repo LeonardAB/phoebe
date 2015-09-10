@@ -7,7 +7,7 @@ package net.fauxpark.phoebe.helper;
  */
 public class KanjiDatabaseHelper extends DatabaseHelper {
 	/**
-	 * The singleton-ish instance of this class.
+	 * The internal database helper instance.
 	 */
 	private static KanjiDatabaseHelper kanjiDbHelper = null;
 
@@ -21,10 +21,10 @@ public class KanjiDatabaseHelper extends DatabaseHelper {
 	}
 
 	/**
-	 * Retrieve the singleton.
+	 * Retrieve the database helper, creating a new one if it does not exist.
 	 *
 	 * @param fileName The file name to pass to the constructor.
-	 * @return A KanjiDatabaseHelper instance.
+	 * @return The KanjiDatabaseHelper instance.
 	 */
 	public static KanjiDatabaseHelper getInstance(String fileName) {
 		if(kanjiDbHelper == null) {

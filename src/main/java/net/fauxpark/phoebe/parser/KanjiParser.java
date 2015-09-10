@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import net.fauxpark.phoebe.model.Kanji;
@@ -18,7 +17,7 @@ import net.fauxpark.phoebe.model.Kanji;
  */
 public class KanjiParser extends Parser<Kanji> {
 	/**
-	 * A list of {@link Node}s that the parser will iterate through in {@link KanjiParser#parse()}.
+	 * A list of Nodes that the parser will iterate through.
 	 */
 	private NodeList characters;
 
@@ -45,7 +44,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 * Where the magic happens. Parses the kanji dictionary.
 	 *
 	 * @param limit The number of kanji to parse. Null parses everything.
-	 * @return A list of {@link Kanji} objects.
+	 * @return A list of kanji.
 	 */
 	@Override
 	public List<Kanji> parse(Integer limit) {
@@ -141,9 +140,9 @@ public class KanjiParser extends Parser<Kanji> {
 	}
 
 	/**
-	 * Get the current kanji's English meanings.
+	 * Get the current kanji's meanings.
 	 *
-	 * @return A list of meanings.
+	 * @return A list of meanings in English.
 	 */
 	private List<String> getMeanings() {
 		NodeList nl = character.getElementsByTagName("meaning");

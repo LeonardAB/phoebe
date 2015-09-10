@@ -7,27 +7,35 @@ package net.fauxpark.phoebe.model;
  */
 public class Radical {
 	/**
-	 * The radical literal in UTF-8 encoding.
+	 * The radical literal in UTF-16 encoding.
+	 *
+	 * Example: "刀"
 	 */
 	private String literal;
 
 	/**
 	 * A comma-separated list of names for the radical, in English.
+	 *
+	 * Example: "knife,sword"
 	 */
 	private String name;
 
 	/**
 	 * The Japanese name of the radical in hiragana.
+	 *
+	 * Example: "かたな"
 	 */
 	private String reading;
 
 	/**
-	 * The stroke count of the radical.
+	 * The stroke count of the radical, from 1 to 17.
 	 */
 	private Integer strokeCount;
 
 	/**
-	 * A list of variants on the radical in UTF-8 encoding.
+	 * A list of variants on the radical in UTF-16 encoding. There are no spaces between each character.
+	 *
+	 * Example: "刂⺈"
 	 */
 	private String variants;
 

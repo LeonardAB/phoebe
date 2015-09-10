@@ -58,9 +58,9 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Add kanji records from a list of {@link Kanji}.
+	 * Add kanji records into the database.
 	 *
-	 * @param kanjis The list of kanji to insert into the database.
+	 * @param kanjis The list of kanji to insert.
 	 */
 	public void addKanji(List<Kanji> kanjis) {
 		String insert = "INSERT INTO kanji (" +
@@ -147,9 +147,9 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Merge kanji components from a list of {@link Components} into the kanji database.
+	 * Merge kanji components into the kanji table.
 	 *
-	 * @param components The list of components to insert into the database.
+	 * @param components The list of components to insert.
 	 */
 	public void addComponents(List<Components> components) {
 		String update = "UPDATE kanji SET components = ? WHERE literal = ?";
@@ -178,9 +178,9 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Add kanji radicals from a list of {@link Radical}s.
+	 * Add kanji radicals into the database.
 	 *
-	 * @param radicals The list of radicals to insert into the database.
+	 * @param radicals The list of radicals to insert.
 	 */
 	public void addRadicals(List<Radical> radicals) {
 		String update = "INSERT INTO radicals (literal, name, reading, stroke_count, variants) VALUES (?, ?, ?, ?, ?)";
@@ -218,9 +218,9 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Merge White Rabbit indexes from a list of {@link WhiteRabbitIndex} into the kanji database.
+	 * Merge White Rabbit indexes into the kanji table.
 	 *
-	 * @param indexes The list of indexes to insert into the database.
+	 * @param indexes The list of indexes to insert.
 	 */
 	public void addWhiteRabbitIndexes(List<WhiteRabbitIndex> indexes) {
 		String update = "UPDATE kanji SET white_rabbit = ? WHERE literal = ? OR literal = ?";
@@ -277,7 +277,7 @@ public class KanjiProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Format the contents of a List<String> into a usable string.
+	 * Surround each entry in a List<String> with square brackets, and return it as a String.
 	 *
 	 * @param list The list to convert.
 	 * @return A string containing the elements of the list, enclosed in square brackets.

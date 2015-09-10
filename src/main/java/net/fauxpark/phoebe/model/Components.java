@@ -7,12 +7,16 @@ package net.fauxpark.phoebe.model;
  */
 public class Components {
 	/**
-	 * The kanji literal in UTF-8 encoding.
+	 * The kanji literal in UTF-16 encoding.
+	 *
+	 * Example: "哀"
 	 */
 	private String literal;
 
 	/**
-	 * The list of components in UTF-8 encoding.
+	 * The list of components in UTF-16 encoding. There are no spaces between each character.
+	 *
+	 * Example: "衣口亠"
 	 */
 	private String components;
 

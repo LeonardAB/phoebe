@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import net.fauxpark.phoebe.model.Radical;
@@ -17,7 +16,7 @@ import net.fauxpark.phoebe.model.Radical;
  */
 public class RadicalsParser extends Parser<Radical> {
 	/**
-	 * A list of {@link Node}s that the parser will iterate through in {@link RadicalsParser#parse()}.
+	 * A list of Nodes that the parser will iterate through.
 	 */
 	private NodeList characters;
 
@@ -38,7 +37,7 @@ public class RadicalsParser extends Parser<Radical> {
 	 * Where the magic happens. Parses the radical dictionary.
 	 *
 	 * @param limit Ignored.
-	 * @return A list of {@link Radical} objects.
+	 * @return A list of kanji radicals.
 	 */
 	@Override
 	public List<Radical> parse(Integer limit) {

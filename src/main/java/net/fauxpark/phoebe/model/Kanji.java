@@ -9,12 +9,16 @@ import java.util.List;
  */
 public class Kanji {
 	/**
-	 * The kanji literal in UTF-8 encoding.
+	 * The kanji literal in UTF-16 encoding.
+	 *
+	 * Example: "愛"
 	 */
 	private String literal;
 
 	/**
 	 * The UCS codepoint of the kanji as a string.
+	 *
+	 * Example: "611b"
 	 */
 	private String codepoint;
 
@@ -34,27 +38,33 @@ public class Kanji {
 	private Integer strokeCount;
 
 	/**
-	 * The general frequency of the kanji in newspapers.
+	 * The frequency ranking of the kanji, from 1 to 2501.
 	 */
 	private Integer frequency;
 
 	/**
-	 * The former JLPT level of the kanji.
+	 * The former JLPT level of the kanji, from 1 to 4.
 	 */
 	private Integer jlpt;
 
 	/**
 	 * The Heisig index of the kanji, from James Heisig's <i>Remembering The Kanji</i>.
+	 *
+	 * Example: 737
 	 */
 	private Integer heisig;
 
 	/**
 	 * The SKIP (System of Kanji Identification by Patterns) code of the kanji.
+	 *
+	 * Example: "2-4-9"
 	 */
 	private String skip;
 
 	/**
 	 * The four corner code of the kanji.
+	 *
+	 * Example: "2024.7"
 	 */
 	private String fourCorner;
 

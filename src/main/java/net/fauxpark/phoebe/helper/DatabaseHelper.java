@@ -41,7 +41,7 @@ public abstract class DatabaseHelper {
 	/**
 	 * Get the database connection.
 	 *
-	 * @return A {@link Connection} object.
+	 * @return The internal Connection object
 	 */
 	public Connection getConnection() {
 		return connection;

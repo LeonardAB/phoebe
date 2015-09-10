@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import net.fauxpark.phoebe.model.Components;
@@ -17,7 +16,7 @@ import net.fauxpark.phoebe.model.Components;
  */
 public class ComponentsParser extends Parser<Components> {
 	/**
-	 * A list of {@link Node}s that the parser will iterate through in {@link ComponentsParser#parse()}.
+	 * A list of Nodes that the parser will iterate through.
 	 */
 	private NodeList characters;
 
@@ -44,7 +43,7 @@ public class ComponentsParser extends Parser<Components> {
 	 * Where the magic happens. Parses the components dictionary.
 	 *
 	 * @param limit The number of components to parse. Null parses everything.
-	 * @return A list of {@link Components} objects.
+	 * @return A list of kanji and their components.
 	 */
 	@Override
 	public List<Components> parse(Integer limit) {

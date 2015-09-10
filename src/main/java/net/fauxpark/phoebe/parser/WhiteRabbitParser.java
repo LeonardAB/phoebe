@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import net.fauxpark.phoebe.model.WhiteRabbitIndex;
@@ -17,7 +16,7 @@ import net.fauxpark.phoebe.model.WhiteRabbitIndex;
  */
 public class WhiteRabbitParser extends Parser<WhiteRabbitIndex> {
 	/**
-	 * A list of {@link Node}s that the parser will iterate through in {@link WhiteRabbitParser#parse()}
+	 * A list of Nodes that the parser will iterate through.
 	 */
 	private NodeList characters;
 
@@ -38,7 +37,7 @@ public class WhiteRabbitParser extends Parser<WhiteRabbitIndex> {
 	 * Where the magic happens. Parses the White Rabbit index list.
 	 *
 	 * @param limit Ignored.
-	 * @return A list of {@link WhiteRabbitIndex} objects.
+	 * @return A list of kanji and their White Rabbit indexes.
 	 */
 	@Override
 	public List<WhiteRabbitIndex> parse(Integer limit) {

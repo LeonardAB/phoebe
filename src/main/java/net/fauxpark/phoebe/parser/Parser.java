@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
  */
 public abstract class Parser<T> {
 	/**
-	 * The {@link Document} to be parsed.
+	 * The document to be parsed.
 	 */
 	protected Document document;
 
@@ -36,8 +36,8 @@ public abstract class Parser<T> {
 	/**
 	 * Parser constructor.
 	 *
-	 * @param fileName The input .xml document to parse into a {@link Document}.
-	 * @param rootTag The root tag which the document must have.
+	 * @param fileName The input .xml file to parse.
+	 * @param rootTag A root tag name to check against the XML document.
 	 */
 	public Parser(String fileName, String rootTag) {
 		try {
@@ -66,7 +66,7 @@ public abstract class Parser<T> {
 	/**
 	 * Set the current character to parse.
 	 *
-	 * @param character A {@link Node} object which will be cast to an {@link Element} and set as the current character.
+	 * @param character A Node object representing the current dictionary entry.
 	 */
 	protected void setElement(Node character) {
 		this.character = (Element) character;
