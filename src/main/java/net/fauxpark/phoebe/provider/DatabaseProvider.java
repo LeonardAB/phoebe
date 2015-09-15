@@ -39,4 +39,20 @@ public abstract class DatabaseProvider {
 	public void close() {
 		dbHelper.close();
 	}
+
+	/**
+	 * Surround each entry in an Iterable with square brackets, and return it as a String.
+	 *
+	 * @param iterable The Iterable object to convert.
+	 * @return A string containing the elements of the iterable, enclosed in square brackets.
+	 */
+	protected <T> String iterableToString(Iterable<T> iterable) {
+		String retVal = "";
+
+		for(T item : iterable) {
+			retVal += "[" + item.toString() + "]";
+		}
+
+		return retVal;
+	}
 }

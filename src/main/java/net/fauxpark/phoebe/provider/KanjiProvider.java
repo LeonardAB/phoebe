@@ -111,25 +111,25 @@ public class KanjiProvider extends DatabaseProvider {
 				pStatement.setString(10, kanji.getFourCorner());
 
 				if(kanji.getOnyomi().size() > 0) {
-					pStatement.setString(11, listToString(kanji.getOnyomi()));
+					pStatement.setString(11, iterableToString(kanji.getOnyomi()));
 				} else {
 					pStatement.setNull(11, Types.VARCHAR);
 				}
 
 				if(kanji.getKunyomi().size() > 0) {
-					pStatement.setString(12, listToString(kanji.getKunyomi()));
+					pStatement.setString(12, iterableToString(kanji.getKunyomi()));
 				} else {
 					pStatement.setNull(12, Types.VARCHAR);
 				}
 
 				if(kanji.getNanori().size() > 0) {
-					pStatement.setString(13, listToString(kanji.getNanori()));
+					pStatement.setString(13, iterableToString(kanji.getNanori()));
 				} else {
 					pStatement.setNull(13, Types.VARCHAR);
 				}
 
 				if(kanji.getMeanings().size() > 0) {
-					pStatement.setString(14, listToString(kanji.getMeanings()));
+					pStatement.setString(14, iterableToString(kanji.getMeanings()));
 				} else {
 					pStatement.setNull(14, Types.VARCHAR);
 				}
@@ -274,21 +274,5 @@ public class KanjiProvider extends DatabaseProvider {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Surround each entry in a List<String> with square brackets, and return it as a String.
-	 *
-	 * @param list The list to convert.
-	 * @return A string containing the elements of the list, enclosed in square brackets.
-	 */
-	private String listToString(List<String> list) {
-		String retVal = "";
-
-		for(String item : list) {
-			retVal += "[" + item + "]";
-		}
-
-		return retVal;
 	}
 }
