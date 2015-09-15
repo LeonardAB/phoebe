@@ -9,6 +9,8 @@ import net.fauxpark.phoebe.parser.ComponentsParser;
 import net.fauxpark.phoebe.parser.KanjiParser;
 import net.fauxpark.phoebe.parser.RadicalsParser;
 import net.fauxpark.phoebe.parser.WhiteRabbitParser;
+import net.fauxpark.phoebe.parser.WordParser;
+import net.fauxpark.phoebe.provider.JishoProvider;
 import net.fauxpark.phoebe.provider.KanjiProvider;
 
 public class Phoebe {
@@ -28,10 +30,13 @@ public class Phoebe {
 		ComponentsParser componentsParser = new ComponentsParser(Config.getString("dic.components.location"));
 		RadicalsParser radicalsParser = new RadicalsParser(Config.getString("dic.radicals.location"));
 		WhiteRabbitParser whiteRabbitParser = new WhiteRabbitParser(Config.getString("dic.whiterabbit.location"));
+		WordParser wordParser = new WordParser(Config.getString("dic.words.location"));
 
 		// Setup DB providers
 		KanjiProvider kanjiProvider = new KanjiProvider(Config.getString("db.kanji.location"));
 		kanjiProvider.createTables();
+		JishoProvider jishoProvider = new JishoProvider(Config.getString("db.jisho.location"));
+		jishoProvider.createTables();
 
 		long start = System.currentTimeMillis();
 
@@ -54,6 +59,10 @@ public class Phoebe {
 		kanjiProvider.addWhiteRabbitIndexes(whiteRabbitParser.parse(null));
 
 		kanjiProvider.close();
+
+		log.info("Adding words");
+
+		jishoProvider.addWords(wordParser.parse(null));
 
 		long end = System.currentTimeMillis();
 
