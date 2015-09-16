@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.xerces.jaxp.DocumentBuilderFactoryImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,7 +42,7 @@ public abstract class Parser<T> {
 	 */
 	public Parser(String fileName, String rootTag) {
 		try {
-			DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory dFactory = DocumentBuilderFactoryImpl.newInstance();
 			DocumentBuilder dBuilder = dFactory.newDocumentBuilder();
 			document = dBuilder.parse(new File(fileName));
 
