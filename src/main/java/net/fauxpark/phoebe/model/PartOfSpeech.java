@@ -157,7 +157,7 @@ public enum PartOfSpeech {
 	DIALECT_KANSAI(0xB1, "Kansai-ben"),
 	DIALECT_KANTO(0xB2, "Kantou-ben"),
 	DIALECT_KYOTO(0xB3, "Kyoto-ben"),
-	DIALECT_KYUSHU(0xB4, "Kyushu-ben"),
+	DIALECT_KYUSHU(0xB4, "Kyuushuu-ben"),
 	DIALECT_NAGANO(0xB5, "Nagano-ben"),
 	DIALECT_OSAKA(0xB6, "Osaka-ben"),
 	DIALECT_RYUKU(0xB7, "Ryuukyuu-ben"),
