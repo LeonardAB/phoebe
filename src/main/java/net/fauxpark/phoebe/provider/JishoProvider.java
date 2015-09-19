@@ -5,12 +5,14 @@ import java.sql.Types;
 import java.util.List;
 import java.util.Set;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.fauxpark.phoebe.helper.JishoDatabaseHelper;
+import net.fauxpark.phoebe.model.PartOfSpeech;
 import net.fauxpark.phoebe.model.Word;
 
 /**
@@ -87,6 +89,60 @@ public class JishoProvider extends DatabaseProvider {
 		} catch(SQLException e) {
 			log.error("SQL Exception occurred.", e);
 		}
+	}
+
+	/**
+	 * Test method. Retrieve the kanji for "please" by searching for its reading.
+	 *
+	 * @return [お願いします][御願いします]
+	 */
+	public String getWordByReading() {
+		String query = "SELECT kanji FROM jisho WHERE readings = \"[おねがいします]\" LIMIT 1";
+		String result = null;
+
+		try {
+			Statement statement = getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+
+			if(resultSet.next()) {
+				result = resultSet.getString(1);
+				resultSet.close();
+				statement.close();
+
+				return result;
+			}
+		} catch(SQLException e) {
+			log.error("SQL Exception occurred.", e);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Another test method. Retrieve the kanji for the first I-adjective in the database.
+	 *
+	 * @return [悪どい]
+	 */
+	public String getWordByPOS() {
+		String query = "SELECT kanji FROM jisho WHERE instr(pos, x'" + PartOfSpeech.ADJECTIVE_I + "') LIMIT 1";
+		String result = null;
+
+		try {
+			Statement statement = getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+
+			if(resultSet.next()) {
+				result = resultSet.getString(1);
+				resultSet.close();
+				statement.close();
+
+				return result;
+			}
+		} catch(SQLException e) {
+			log.error("SQL Exception occurred.", e);
+		}
+
+		return null;
 	}
 
 	/**

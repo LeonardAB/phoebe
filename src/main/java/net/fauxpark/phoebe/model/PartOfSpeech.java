@@ -243,4 +243,14 @@ public enum PartOfSpeech {
 
 		return UNCLASSIFIED.code;
 	}
+
+	/**
+	 * Override toString for easier use in SQL queries.
+	 *
+	 * @return The opcode as a hex string, padded to two characters if needed.
+	 */
+	@Override
+	public String toString() {
+		return String.format("%02X", code);
+	}
 }
