@@ -35,13 +35,12 @@ public class JishoProvider extends DatabaseProvider {
 	 */
 	public void createTables() {
 		String schemaJisho = "CREATE TABLE IF NOT EXISTS jisho (" +
-		"id INTEGER PRIMARY KEY, "+
-		"kanji TEXT, readings TEXT NOT NULL, "+
-		"meanings TEXT NOT NULL, " +
-		"pos BLOB)"; //TODO: schema
+		"id INTEGER PRIMARY KEY, kanji TEXT, readings TEXT NOT NULL, " +
+		"meanings TEXT NOT NULL, pos BLOB)";
 
 		try {
 			log.info("Creating Jisho database table");
+
 			Statement statement = getConnection().createStatement();
 			statement.executeUpdate(schemaJisho);
 			statement.close();
@@ -91,10 +90,10 @@ public class JishoProvider extends DatabaseProvider {
 	}
 
 	/**
-	 * Converts the set of pos element opcodes to a byte array
-	 * to be inserted into the database as is.
+	 * Convert the set of POS element opcodes to a byte array
+	 * to be inserted into the database.
 	 *
-	 * @param set The set of pos elements.
+	 * @param set The set of POS elements.
 	 * @return An array of POS opcodes.
 	 */
 	private byte[] posToByteArray(Set<Integer> set) {

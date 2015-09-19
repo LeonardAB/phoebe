@@ -23,6 +23,7 @@ import net.fauxpark.phoebe.model.Components;
  */
 public class KanjiProvider extends DatabaseProvider {
 	private static final Logger log = LogManager.getLogger(KanjiProvider.class);
+
 	/**
 	 * KanjiProvider constructor.
 	 *

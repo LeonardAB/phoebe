@@ -39,7 +39,7 @@ public enum PartOfSpeech {
 	VERB_INTRANSITIVE(0x1D, "intransitive verb"),
 	VERB_UNSPECIFIED(0x1E, "verb unspecified"),
 	////////////////
-	VERB_NIDAN_U(0x20, "Nidan verb with 'u' ending (archaic)"), //move me
+	VERB_NIDAN_U(0x20, "Nidan verb with 'u' ending (archaic)"),
 	VERB_NIDAN_BU_UPPER(0x21, "Nidan verb (upper class) with `bu' ending (archaic)"),
 	VERB_NIDAN_BU_LOWER(0x22, "Nidan verb (lower class) with `bu' ending (archaic)"),
 	VERB_NIDAN_DZU_UPPER(0x23, "Nidan verb (upper class) with `dzu' ending (archaic)"),

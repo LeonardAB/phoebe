@@ -64,6 +64,8 @@ public class Phoebe {
 
 		jishoProvider.addWords(wordParser.parse(null));
 
+		jishoProvider.close();
+
 		long end = System.currentTimeMillis();
 
 		log.info("Done, took " + ((end - start) / 1000.0) + " seconds.");
