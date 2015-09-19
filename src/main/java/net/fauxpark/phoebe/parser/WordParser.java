@@ -96,6 +96,8 @@ public class WordParser extends Parser<Word> {
 		NodeList fieldTags = character.getElementsByTagName("field");
 		NodeList miscTags = character.getElementsByTagName("misc");
 		NodeList dialTags = character.getElementsByTagName("dial");
+		NodeList keInfTags = character.getElementsByTagName("ke_inf");
+		NodeList reInfTags = character.getElementsByTagName("re_inf");
 		Set<Integer> retVal = new LinkedHashSet<Integer>();
 
 		for(int i = 0; i < posTags.getLength(); i++) {
@@ -112,6 +114,14 @@ public class WordParser extends Parser<Word> {
 
 		for(int i = 0; i < dialTags.getLength(); i++) {
 			retVal.add(PartOfSpeech.getPosCode(dialTags.item(i).getTextContent()));
+		}
+
+		for(int i = 0; i < keInfTags.getLength(); i++) {
+			retVal.add(PartOfSpeech.getPosCode(keInfTags.item(i).getTextContent()));
+		}
+
+		for(int i = 0; i < reInfTags.getLength(); i++) {
+			retVal.add(PartOfSpeech.getPosCode(reInfTags.item(i).getTextContent()));
 		}
 
 		return retVal;

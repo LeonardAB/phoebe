@@ -195,8 +195,8 @@ public enum PartOfSpeech {
 	USUALLY_KANJI(0xF1, "word usually written using kanji alone"),
 	EXCLUSIVELY_KANA(0xF2, "exclusively kana"),
 	EXCLUSIVELY_KANJI(0xF3, "exclusively kanji"),
-	OUTDATED_KANA(0xF4, "word containing outdated kana"),
-	OUTDATED_KANJI(0xF5, "word containing outdated kanji"),
+	OUTDATED_KANA(0xF4, "out-dated or obsolete kana usage"),
+	OUTDATED_KANJI(0xF5, "word containing out-dated kanji"),
 	OLD_KANA(0xF6, "old or irregular kana form"),
 	ARCHAISM(0xF7, "archaism"),
 	////////////////
