@@ -20,12 +20,25 @@ public class Phoebe {
 			System.exit(1);
 		}
 
-		log.info("Running Kanji task");
+		boolean kanjiTask = Config.getBoolean("task.kanji.run");
+		boolean jishoTask = Config.getBoolean("task.jisho.run");
 
-		KanjiTask.run();
+		if(!kanjiTask && !jishoTask) {
+			log.error("No tasks configured to run. Exiting.");
 
-		log.info("Running Jisho Task");
+			System.exit(1);
+		}
 
-		JishoTask.run();
+		if(kanjiTask) {
+			log.info("Running Kanji task");
+
+			KanjiTask.run();
+		}
+
+		if(jishoTask) {
+			log.info("Running Jisho Task");
+
+			JishoTask.run();
+		}
 	}
 }

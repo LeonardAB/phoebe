@@ -84,4 +84,14 @@ public class Config {
 			return null;
 		}
 	}
+
+	/**
+	 * Retrieve a boolean from the properties.
+	 *
+	 * @param property The property key to get.
+	 * @return The boolean value of the property.
+	 */
+	public static Boolean getBoolean(String property) {
+		return Boolean.valueOf(getString(property));
+	}
 }
