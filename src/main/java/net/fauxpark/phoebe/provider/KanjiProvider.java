@@ -78,7 +78,9 @@ public class KanjiProvider extends DatabaseProvider {
 			for(Kanji kanji : kanjis) {
 				log.debug("Inserting kanji: " + kanji.getLiteral());
 
-				pStatement.setString(1, kanji.getLiteral());
+				// We use setBytes here and in other places to force
+				// writing surrogate pairs as a single UTF-8 character
+				pStatement.setBytes(1, kanji.getLiteral().getBytes());
 				pStatement.setString(2, kanji.getCodepoint());
 				pStatement.setInt(3, kanji.getRadical());
 
@@ -165,7 +167,7 @@ public class KanjiProvider extends DatabaseProvider {
 				log.debug("Inserting components for kanji: " + component.getLiteral());
 
 				pStatement.setString(1, component.getComponents());
-				pStatement.setString(2, component.getLiteral());
+				pStatement.setBytes(2, component.getLiteral().getBytes());
 				pStatement.addBatch();
 			}
 
@@ -201,7 +203,7 @@ public class KanjiProvider extends DatabaseProvider {
 				pStatement.setInt(4, radical.getStrokeCount());
 
 				if(radical.getVariants() != null) {
-					pStatement.setString(5, radical.getVariants());
+					pStatement.setBytes(5, radical.getVariants().getBytes());
 				} else {
 					pStatement.setNull(5, Types.VARCHAR);
 				}

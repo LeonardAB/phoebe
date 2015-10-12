@@ -71,7 +71,7 @@ public class JishoProvider extends DatabaseProvider {
 				pStatement.setInt(1, word.getId());
 
 				if(word.getKanji().size() > 0) {
-					pStatement.setString(2, iterableToString(word.getKanji()));
+					pStatement.setBytes(2, iterableToString(word.getKanji()).getBytes());
 				} else {
 					pStatement.setNull(2, Types.VARCHAR);
 				}
