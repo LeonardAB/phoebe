@@ -16,6 +16,8 @@ A few other data sources are also merged into the kanji database:
  - Indexes for the [White Rabbit Japan](http://whiterabbitjapan.com/) Kanji flashcard series and poster
  - A listing of the [214 kanji radicals](https://en.wikipedia.org/wiki/Table_of_Japanese_kanji_radicals) and their meanings and variants in a separate `radicals` table
 
+These sources can be found in the [phoebe-dictionaries](https://github.com/fauxpark/phoebe-dictionaries) repository.
+
 Stroke order data from [KanjiVG](https://github.com/KanjiVG/kanjivg) may also be added in future, depending on how well Android can be made to render SVG paths from strings.
 Japanese names from the [JMNedict](http://www.edrdg.org/enamdict/enamdict_doc.html) project is also planned, but not set in stone.
 
