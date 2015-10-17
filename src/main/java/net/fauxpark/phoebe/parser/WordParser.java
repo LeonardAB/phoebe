@@ -60,7 +60,7 @@ public class WordParser extends Parser<Word> {
 
 	private List<String> getKanji() {
 		NodeList nl = character.getElementsByTagName("keb");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 
 		for(int i = 0; i < nl.getLength(); i++) {
 			retVal.add(nl.item(i).getTextContent());
@@ -71,7 +71,7 @@ public class WordParser extends Parser<Word> {
 
 	private List<String> getReadings() {
 		NodeList nl = character.getElementsByTagName("reb");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 
 		for(int i = 0; i < nl.getLength(); i++) {
 			retVal.add(nl.item(i).getTextContent());
@@ -82,7 +82,7 @@ public class WordParser extends Parser<Word> {
 
 	private List<String> getMeanings() {
 		NodeList nl = character.getElementsByTagName("gloss");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 
 		for(int i = 0; i < nl.getLength(); i++) {
 			retVal.add(nl.item(i).getTextContent());
@@ -98,7 +98,7 @@ public class WordParser extends Parser<Word> {
 		NodeList dialTags = character.getElementsByTagName("dial");
 		NodeList keInfTags = character.getElementsByTagName("ke_inf");
 		NodeList reInfTags = character.getElementsByTagName("re_inf");
-		Set<Integer> retVal = new LinkedHashSet<Integer>();
+		Set<Integer> retVal = new LinkedHashSet<>();
 
 		for(int i = 0; i < posTags.getLength(); i++) {
 			retVal.add(PartOfSpeech.getPosCode(posTags.item(i).getTextContent()));

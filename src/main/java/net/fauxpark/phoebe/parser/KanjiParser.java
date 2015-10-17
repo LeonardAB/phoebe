@@ -88,7 +88,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 */
 	private List<String> getOnyomi() {
 		NodeList nl = character.getElementsByTagName("reading");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 		Element el = null;
 
 		for(int i = 0; i < nl.getLength(); i++) {
@@ -109,7 +109,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 */
 	private List<String> getKunyomi() {
 		NodeList nl = character.getElementsByTagName("reading");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 		Element el = null;
 
 		for(int i = 0; i < nl.getLength(); i++) {
@@ -130,7 +130,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 */
 	private List<String> getNanori() {
 		NodeList nl = character.getElementsByTagName("nanori");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 
 		for(int i = 0; i < nl.getLength(); i++) {
 			retVal.add(nl.item(i).getTextContent());
@@ -146,7 +146,7 @@ public class KanjiParser extends Parser<Kanji> {
 	 */
 	private List<String> getMeanings() {
 		NodeList nl = character.getElementsByTagName("meaning");
-		List<String> retVal = new ArrayList<String>();
+		List<String> retVal = new ArrayList<>();
 
 		for(int i = 0; i < nl.getLength(); i++) {
 			// Meanings with no "m_lang" attribute are in English
