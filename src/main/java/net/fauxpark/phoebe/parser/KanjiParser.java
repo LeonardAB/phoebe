@@ -95,7 +95,7 @@ public class KanjiParser extends Parser<Kanji> {
 			el = (Element) nl.item(i);
 
 			if(el.getAttribute("r_type").equals("ja_on")) {
-				retVal.add(nl.item(i).getTextContent());
+				retVal.add(el.getTextContent());
 			}
 		}
 
@@ -116,7 +116,7 @@ public class KanjiParser extends Parser<Kanji> {
 			el = (Element) nl.item(i);
 
 			if(el.getAttribute("r_type").equals("ja_kun")) {
-				retVal.add(nl.item(i).getTextContent());
+				retVal.add(el.getTextContent());
 			}
 		}
 
