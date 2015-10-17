@@ -43,7 +43,7 @@ public class WhiteRabbitParser extends Parser<WhiteRabbitIndex> {
 	public List<WhiteRabbitIndex> parse(Integer limit) {
 		List<WhiteRabbitIndex> indexes = new ArrayList<>();
 
-		log.info("Parsing " + characters.getLength() + " White Rabbit indexes");
+		log.info("Parsing {} White Rabbit indexes", characters.getLength());
 
 		for(int i = 0; i < characters.getLength(); i++) {
 			setElement(characters.item(i));

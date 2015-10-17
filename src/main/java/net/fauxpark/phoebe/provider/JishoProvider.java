@@ -66,7 +66,9 @@ public class JishoProvider extends DatabaseProvider {
 			PreparedStatement pStatement = getConnection().prepareStatement(insert);
 
 			for(Word word : words) {
-				log.debug("Inserting word: " + word.getKanji());
+				if(log.isDebugEnabled()) {
+					log.debug("Inserting word: {}", word.getKanji());
+				}
 
 				pStatement.setInt(1, word.getId());
 

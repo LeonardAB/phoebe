@@ -76,7 +76,9 @@ public class KanjiProvider extends DatabaseProvider {
 			PreparedStatement pStatement = getConnection().prepareStatement(insert);
 
 			for(Kanji kanji : kanjis) {
-				log.debug("Inserting kanji: " + kanji.getLiteral());
+				if(log.isDebugEnabled()) {
+					log.debug("Inserting kanji: {}", kanji.getLiteral());
+				}
 
 				// We use setBytes here and in other places to force
 				// writing surrogate pairs as a single UTF-8 character
@@ -164,7 +166,9 @@ public class KanjiProvider extends DatabaseProvider {
 			getConnection().setAutoCommit(false);
 
 			for(Components component : components) {
-				log.debug("Inserting components for kanji: " + component.getLiteral());
+				if(log.isDebugEnabled()) {
+					log.debug("Inserting components for kanji: {}", component.getLiteral());
+				}
 
 				pStatement.setString(1, component.getComponents());
 				pStatement.setBytes(2, component.getLiteral().getBytes());
@@ -195,7 +199,9 @@ public class KanjiProvider extends DatabaseProvider {
 			getConnection().setAutoCommit(false);
 
 			for(Radical radical : radicals) {
-				log.debug("Inserting radical: " + radical.getLiteral());
+				if(log.isDebugEnabled()) {
+					log.debug("Inserting radical: {}", radical.getLiteral());
+				}
 
 				pStatement.setString(1, radical.getLiteral());
 				pStatement.setString(2, radical.getName());
@@ -235,7 +241,9 @@ public class KanjiProvider extends DatabaseProvider {
 			getConnection().setAutoCommit(false);
 
 			for(WhiteRabbitIndex index : indexes) {
-				log.debug("Inserting White Rabbit index for kanji: " + index.getLiteral());
+				if(log.isDebugEnabled()) {
+					log.debug("Inserting White Rabbit index for kanji: {}", index.getLiteral());
+				}
 
 				pStatement.setString(1, index.getIndex());
 				pStatement.setString(2, index.getLiteral());

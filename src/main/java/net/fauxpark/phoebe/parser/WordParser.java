@@ -41,7 +41,7 @@ public class WordParser extends Parser<Word> {
 	public List<Word> parse(Integer limit) {
 		List<Word> words = new ArrayList<>();
 
-		log.info("Parsing " + entries.getLength() + " entries.");
+		log.info("Parsing {} entries.", entries.getLength());
 
 		for(int i = 0; i < entries.getLength(); i++) {
 			setElement(entries.item(i));

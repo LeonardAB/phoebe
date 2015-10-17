@@ -46,7 +46,7 @@ public abstract class Parser<T> {
 			DocumentBuilder dBuilder = dFactory.newDocumentBuilder();
 			document = dBuilder.parse(new File(fileName));
 
-			log.info("Parsed file: " + fileName);
+			log.info("Parsed file: {}", fileName);
 
 			if(!document.getDocumentElement().getTagName().equals(rootTag)) {
 				throw new UnsupportedOperationException("Root tag \"" + rootTag + "\" not found.");

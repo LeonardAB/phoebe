@@ -27,7 +27,7 @@ public abstract class DatabaseHelper {
 	 */
 	public DatabaseHelper(String fileName) {
 		try {
-			log.info("Opening database: " + fileName);
+			log.info("Opening database: {}", fileName);
 
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + fileName);

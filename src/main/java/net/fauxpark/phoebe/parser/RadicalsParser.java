@@ -43,7 +43,7 @@ public class RadicalsParser extends Parser<Radical> {
 	public List<Radical> parse(Integer limit) {
 		List<Radical> radicals = new ArrayList<>();
 
-		log.info("Parsing " + characters.getLength() + " entries.");
+		log.info("Parsing {} entries.", characters.getLength());
 
 		for(int i = 0; i < characters.getLength(); i++) {
 			setElement(characters.item(i));

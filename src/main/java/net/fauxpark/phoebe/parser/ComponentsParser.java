@@ -34,7 +34,7 @@ public class ComponentsParser extends Parser<Components> {
 		String dbVersion = document.getElementsByTagName("database_version").item(0).getTextContent();
 		String creationDate = document.getElementsByTagName("date_of_creation").item(0).getTextContent();
 
-		log.info("KRADX Version " + fileVersion + " (" + dbVersion + "), created " + creationDate);
+		log.info("KRADX Version {} ({}), created {}", fileVersion, dbVersion, creationDate);
 
 		characters = document.getElementsByTagName("kanji");
 	}
@@ -50,12 +50,12 @@ public class ComponentsParser extends Parser<Components> {
 		List<Components> components = new ArrayList<>();
 
 		if(limit == null || limit > characters.getLength()) {
-			log.debug("Invalid parse limit: " + limit + ". Parsing all entries.");
+			log.debug("Invalid parse limit: {}. Parsing all entries.", limit);
 
 			limit = characters.getLength();
 		}
 
-		log.info("Parsing " + limit + " entries.");
+		log.info("Parsing {} entries.", limit);
 
 		for(int i = 0; i < limit; i++) {
 			setElement(characters.item(i));
